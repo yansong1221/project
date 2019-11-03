@@ -1,39 +1,37 @@
-#include <uv.h>
+
+#include "stdafx.h"
 #include <vector>
 
 class ITCPEvent
 {
 public:
     virtual void onNewConnect(uint32_t socketID) = 0;
-    virtual void onNewMessage(uint32_t socketID, void *p, size_t n) = 0;
+    virtual void onNewMessage(uint32_t socketID,const void *p, size_t n) = 0;
     virtual void onCloseConnect(uint32_t socketID) = 0;
 };
 
-class Connection
+class ENGINE_API Connection
 {
 private:
     /* data */
 public:
-    Connection(uint16_t bindIndex);
+    Connection(uint16_t bindIndex, ITCPEvent* handle);
     ~Connection();
 
 public:
     uint32_t getSocketID() const;
-    void detach();
 
     bool active() const;
 
-    void accept(uv_stream_t *server);
+    void accept(void *server);
 
-    void send(const char* p,size_t n);
+    void send(const void* p,size_t n);
 
     void close();
-private:
-    void onEventRead(const char* p,size_t n);
-    void onEventClose();
-private:
-    uv_tcp_t client_;
 
+	uint16_t getRoundIndex() const;
+private:
+	void parseDsata();
 private:
     uint16_t roundIndex_;
     uint16_t bindIndex_;
@@ -41,22 +39,8 @@ private:
     bool active_;
 
     std::vector<char> readBuf_;
-};
 
-class ConnectionMgr
-{
-public:
-    ConnectionMgr();
-    ~ConnectionMgr();
+	void* client_;
 
-    ConnectionMgr(ConnectionMgr &) = delete;
-    ConnectionMgr &operator=(ConnectionMgr &) = delete;
-
-public:
-    Connection *create();
-    static ConnectionMgr *getInstace();
-
-private:
-    std::vector<Connection *> conns_;
-    static ConnectionMgr *instance_;
+	ITCPEvent* TCPEvent_;
 };

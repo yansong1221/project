@@ -1,16 +1,20 @@
 #include "Connection.h"
 
+#include <uv.h>
+
 typedef struct
 {
-    uv_write_t req;
-    uv_buf_t buf;
+	uv_write_t req;
+	uv_buf_t buf;
 } write_req_t;
 
-Connection::Connection(uint16_t bindIndex)
-    : bindIndex_(bindIndex),
-      active_(false)
+Connection::Connection(uint16_t bindIndex, ITCPEvent* handle)
+	: bindIndex_(bindIndex),
+	active_(false),
+	client_(nullptr),
+	TCPEvent_(handle)
 {
-    roundIndex_ = 1;
+	roundIndex_ = 1;
 }
 
 Connection::~Connection()
@@ -18,127 +22,142 @@ Connection::~Connection()
 }
 uint32_t Connection::getSocketID() const
 {
-    return ((uint32_t)bindIndex_ << 16) | roundIndex_;
+	return ((uint32_t)bindIndex_ << 16) | roundIndex_;
 }
-void Connection::detach()
+void Connection::accept(void *server)
 {
-    do
-    {
-        roundIndex_++;
-    } while (roundIndex_ == 0);
-}
+	if (active())
+	{
+		return;
+	}
 
-void Connection::accept(uv_stream_t *server)
-{
-    if (active())
-    {
-        return;
-    }
+	active_ = true;
 
-    uv_tcp_init(uv_default_loop(), &client_);
-    client_.data = this;
+	client_ = malloc(sizeof(uv_tcp_t));
+	uv_tcp_init(uv_default_loop(), ((uv_tcp_t*)client_));
+	((uv_tcp_t*)client_)->data = this;
 
-    if (uv_accept(server, (uv_stream_t *)&client_) == 0)
-    {
-        //recv data
-        uv_read_start((uv_stream_t *)&client_,
+	if (uv_accept((uv_stream_t*)server, (uv_stream_t *)client_) == 0)
+	{
+		TCPEvent_->onNewConnect(getSocketID());
 
-                      //分配内存
-                      [](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
-                          buf->base = (char *)malloc(suggested_size);
-                          buf->len = suggested_size;
-                      },
+		//recv data
+		uv_read_start((uv_stream_t *)client_,
 
-                      //接收数据回调
-                      [](uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
-                          auto conn = (Connection *)client->data;
-                          if (nread > 0)
-                          {
+			//alloc memory
+			[](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
+			buf->base = (char *)malloc(suggested_size);
+			buf->len = suggested_size;
+			},
 
-                              conn->onEventRead(buf->base, nread);
-                              return;
-                          }
-                          if (nread < 0)
-                          {
-                              if (nread != UV_EOF)
-                                  fprintf(stderr, "Read error %s\n", uv_err_name(nread));
+			//callback
+			[](uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
+			auto conn = (Connection *)client->data;
+			if (nread > 0)
+			{
+				std::copy(buf->base, buf->base + nread, std::back_inserter(conn->readBuf_));
+				//parse data
+				conn->parseDsata();
+				return;
+			}
+			if (nread < 0)
+			{
+				if (nread != UV_EOF)
+					fprintf(stderr, "Read error %s\n", uv_err_name(nread));
+				conn->close();
+			}
 
-                              conn->onEventClose();
-                          }
-
-                          free(buf->base);
-                      });
-
-        active_ = true;
-    }
-    else
-    {
-        uv_close((uv_handle_t *)&client_, nullptr);
-    }
+			free(buf->base);
+		});
+	}
+	else
+	{
+		close();
+	}
 }
 bool Connection::active() const
 {
-    return active_;
+	return active_;
 }
 void Connection::close()
 {
-    if (active() == false)
-    {
-        return;
-    }
-    uv_close((uv_handle_t *)&client_, nullptr);
-}
-void Connection::send(const char *p, size_t n)
-{
-    if (active() == false)
-    {
-        return;
-    }
+	if (active() == false)
+	{
+		return;
+	}
+	uv_close((uv_handle_t *)client_, [](uv_handle_t* handle) 
+	{
+		auto conn = ((Connection*)handle->data);
 
-    write_req_t *req = (write_req_t *)malloc(sizeof(write_req_t));
+		conn->TCPEvent_->onCloseConnect(conn->getSocketID());
 
-    char *buf = (char *)malloc(n);
-    memcpy(buf, p, n);
+		conn->active_ = false;
+		conn->readBuf_.clear();
+		conn->client_ = nullptr;
 
-    req->buf = uv_buf_init(buf, n);
-    uv_write((uv_write_t *)req, (uv_stream_t *)&client_, &req->buf, 1,
-             //发送完成回调
-             [](uv_write_t *req, int status) {
-                 if (status)
-                 {
-                     fprintf(stderr, "Write error %s\n", uv_strerror(status));
-                 }
-                 write_req_t *wr = (write_req_t *)req;
-                 free(wr->buf.base);
-                 free(wr);
-             });
-}
-void Connection::onEventRead(const char *p, size_t n)
-{
-    std::copy(p, p + n, std::back_inserter(readBuf_));
-}
-void Connection::onEventClose()
-{
-    
-    uv_close((uv_handle_t *)&client_, nullptr);
-    active_ = false;
-}
-ConnectionMgr::ConnectionMgr()
-{
-}
-ConnectionMgr::~ConnectionMgr()
-{
-}
-Connection *ConnectionMgr::create()
-{
-}
-ConnectionMgr *ConnectionMgr::getInstace()
-{
-    if (instance_ == nullptr)
-    {
-        instance_ = new ConnectionMgr;
-        return instance_;
-    }
+		do
+		{
+			conn->roundIndex_++;
+		} while (conn->roundIndex_ == 0);
 
-    return instance_;
+		free(handle);
+	});
+}
+
+
+uint16_t Connection::getRoundIndex() const
+{
+	return roundIndex_;
+}
+
+void Connection::parseDsata()
+{
+	while (readBuf_.size() >= sizeof(uint32_t))
+	{
+		uint32_t len = *(uint32_t*)readBuf_.data();
+		len = ::ntohl(len);
+
+		if (len >= 1024)
+		{
+			close();
+			break;
+		}
+
+		if(len >= readBuf_.size() + sizeof(uint32_t)) break;
+
+		const char* data = &readBuf_[sizeof(uint32_t)];
+		TCPEvent_->onNewMessage(getSocketID(), data, len);
+
+		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(uint32_t) + len);
+	}
+}
+
+void Connection::send(const void *p, size_t n)
+{
+	if (active() == false)
+	{
+		return;
+	}
+
+	uint32_t len = ::htonl(n);
+
+
+	write_req_t *req = (write_req_t *)malloc(sizeof(write_req_t));
+
+	char *buf = (char *)malloc(n + sizeof(uint32_t));
+	memcpy(buf, &len, sizeof(uint32_t));
+	memcpy(buf + sizeof(uint32_t), p, n);
+
+	req->buf = uv_buf_init(buf, n);
+	uv_write((uv_write_t *)req, (uv_stream_t *)client_, &req->buf, 1,
+		//callback
+		[](uv_write_t *req, int status) {
+		if (status != 0)
+		{
+			fprintf(stderr, "Write error %s\n", uv_strerror(status));
+		}
+		write_req_t *wr = (write_req_t *)req;
+		free(wr->buf.base);
+		free(wr);
+	});
 }
