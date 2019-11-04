@@ -53,6 +53,11 @@ bool TCPServer::listen(int port, int backlog)
 }
 void TCPServer::close()
 {
+	for (const auto& v : conns_)
+	{
+		v->close();
+	}
+
 	uv_close((uv_handle_t *)server_, [](uv_handle_t* handle)
 	{
 		auto srv = (TCPServer*)handle->data;

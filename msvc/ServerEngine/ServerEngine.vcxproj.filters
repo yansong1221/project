@@ -33,6 +33,15 @@
     <ClInclude Include="..\..\ServerEngine\Timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ServerEngine\Signal.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ServerEngine\HttpClient.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ServerEngine\MemoryStream.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ServerEngine\Connection.cpp">
@@ -48,6 +57,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ServerEngine\Timer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ServerEngine\Signal.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ServerEngine\HttpClient.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ServerEngine\MemoryStream.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

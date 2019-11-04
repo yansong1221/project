@@ -4,9 +4,8 @@
 
 struct  uv_work_req
 {
-	uv_work_t work;
-	void*	task;
-	void*	threadPool;
+	uv_work_t		work;
+	IThreadTask*	task;
 };
 
 ThreadPool::ThreadPool()
@@ -24,7 +23,7 @@ void ThreadPool::addTask(IThreadTask* task)
 	uv_work_req* work_req = (uv_work_req*)malloc(sizeof(uv_work_req));
 	
 	work_req->task = task;
-	work_req->threadPool = this;
+	work_req->work.data = this;
 
 	tasks_.push_back(work_req);
 
@@ -32,14 +31,12 @@ void ThreadPool::addTask(IThreadTask* task)
 	[](uv_work_t* req)
 	{
 		uv_work_req* work_req = (uv_work_req*)req;
-		IThreadTask* task = (IThreadTask*)work_req->task;
-		task->run();
+		work_req->task->run();
 	},
 	[](uv_work_t* req, int status)
 	{
 		uv_work_req* work_req = (uv_work_req*)req;
-		IThreadTask* task = (IThreadTask*)work_req->task;
-		ThreadPool* threadPool = (ThreadPool*)work_req->threadPool;
+		ThreadPool* threadPool = (ThreadPool*)req->data;
 
 		if (status == UV_ECANCELED)
 		{
@@ -47,13 +44,13 @@ void ThreadPool::addTask(IThreadTask* task)
 		}
 		else
 		{	
-			task->prsentMainThread();
+			work_req->task->prsentMainThread();
 		}
 
 		auto iter = std::find(threadPool->tasks_.begin(), threadPool->tasks_.end(), req);
 		threadPool->tasks_.erase(iter);
 
-		delete task;
+		delete work_req->task;
 		delete req;
 	});
 }
@@ -76,7 +73,8 @@ void ThreadPool::cancelTask(IThreadTask* task)
 
 void ThreadPool::close()
 {
-	for (const auto& v : tasks_)
+	auto tmp = tasks_;
+	for (const auto& v : tmp)
 	{
 		uv_cancel((uv_req_t*)v);
 	}

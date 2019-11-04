@@ -81,7 +81,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>../../3rd/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuvd.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuvd.lib;libcurld.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -96,7 +96,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>../../3rd/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuvd.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuvd.lib;libcurld.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,7 +114,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../3rd/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuv.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuv.lib;libcurl.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,12 +132,15 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../3rd/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuv.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuv.lib;libcurl.lib;ws2_32.lib;IPHLPAPI.lib;Psapi.lib;Userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ServerEngine\Connection.h" />
     <ClInclude Include="..\..\ServerEngine\EventDispatcher.h" />
+    <ClInclude Include="..\..\ServerEngine\HttpClient.h" />
+    <ClInclude Include="..\..\ServerEngine\MemoryStream.h" />
+    <ClInclude Include="..\..\ServerEngine\Signal.h" />
     <ClInclude Include="..\..\ServerEngine\stdafx.h" />
     <ClInclude Include="..\..\ServerEngine\TCPServer.h" />
     <ClInclude Include="..\..\ServerEngine\ThreadPool.h" />
@@ -146,6 +149,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\ServerEngine\Connection.cpp" />
     <ClCompile Include="..\..\ServerEngine\EventDispatcher.cpp" />
+    <ClCompile Include="..\..\ServerEngine\HttpClient.cpp" />
+    <ClCompile Include="..\..\ServerEngine\MemoryStream.cpp" />
+    <ClCompile Include="..\..\ServerEngine\Signal.cpp" />
     <ClCompile Include="..\..\ServerEngine\TCPServer.cpp" />
     <ClCompile Include="..\..\ServerEngine\ThreadPool.cpp" />
     <ClCompile Include="..\..\ServerEngine\Timer.cpp" />

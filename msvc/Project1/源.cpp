@@ -4,6 +4,8 @@
 #include "ServerEngine/TCPServer.h"
 
 #include <iostream>
+#include <signal.h>
+#include <thread>
 class App:public ITCPEvent {
 public:
 	virtual void onNewConnect(uint32_t socketID)
@@ -19,6 +21,19 @@ public:
 
 	}
 };
+class taskTest : public IThreadTask
+{
+public:
+	~taskTest()
+	{
+		std::cout << "Ïß³ÌÎö¹¹" << std::endl;
+	}
+public:
+	virtual void run()
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+};
 int main()
 {
 	EventDispatcher app;
@@ -27,16 +42,28 @@ int main()
 	server.listen(8800, 1024);
 	server.setEventHandle(&aaa);
 
-	app.addTimer(1000, [](TimerWapper timer)
+	for (int i = 0; i < 10000; ++i)
 	{
-		static int i = 0;
-		i++;
-		if (i == 10)
+		app.addTimer(1000, [&](TimerWapper timer)
 		{
-			timer.cancel();
-		}
-		std::cout << "----" << std::endl;
+			if (timer.runCount() == 10)
+			{
+				timer.cancel();
+				
+			}
+			std::cout << "----" << std::endl;		
+		});	
+	}
+	
+	app.addSignal(SIGINT, [&]()
+	{
+		app.close();
 	});
+
+	for (int i = 0; i < 10000; ++i)
+	{
+		app.addTask(new taskTest);
+	}
 
 	return app.run();
 }

@@ -3,7 +3,7 @@
 #include "stdafx.h"
 
 #include <functional>
-
+#include <set>
 
 class ENGINE_API TimerWapper
 {
@@ -12,6 +12,8 @@ public:
 
 public:
 	void cancel();
+
+	uint64_t runCount();
 private:
 	void* timer_;
 };
@@ -20,6 +22,7 @@ using TimerHandle = std::function<void(TimerWapper)>;
 
 class ENGINE_API Timer
 {
+	friend class TimerWapper;
 public:
 	Timer();
 	~Timer();
@@ -27,5 +30,12 @@ public:
 public:
 
 	TimerWapper addTimer(uint64_t timeout,TimerHandle handle);
+
+	void close();
+
+protected:
+	void cancel(void* t);
+private:
+	std::set<void*> timers_;
 };
 
