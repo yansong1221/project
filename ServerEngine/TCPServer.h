@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "stdafx.h"
+#include "ServerEngine.h"
 #include "Connection.h"
 
 class ENGINE_API TCPServer

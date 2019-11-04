@@ -40,7 +40,20 @@ bool TCPServer::listen(int port, int backlog)
 			return;
 		}
 
-		conn->accept(server);
+		uv_tcp_t* client = (uv_tcp_t*)malloc(sizeof(uv_tcp_t));
+		uv_tcp_init(uv_default_loop(), client);
+
+		if (uv_accept((uv_stream_t*)server, (uv_stream_t *)client) == 0)
+		{
+			conn->attach(client);	
+		}
+		else
+		{
+			uv_close((uv_handle_t *)client, [](uv_handle_t* handle)
+			{
+				free(handle);
+			});
+		}
 	});
 
     if (r)

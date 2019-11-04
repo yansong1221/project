@@ -1,5 +1,5 @@
-
-#include "stdafx.h"
+#pragma once
+#include "ServerEngine.h"
 #include <vector>
 
 class ITCPEvent
@@ -23,15 +23,16 @@ public:
 
     bool active() const;
 
-    void accept(void *server);
-
     void send(const void* p,size_t n);
 
     void close();
 
 	uint16_t getRoundIndex() const;
+
+	void attach(void* client);
 private:
 	void parseDsata();
+	void recvData();
 private:
     uint16_t roundIndex_;
     uint16_t bindIndex_;

@@ -24,57 +24,6 @@ uint32_t Connection::getSocketID() const
 {
 	return ((uint32_t)bindIndex_ << 16) | roundIndex_;
 }
-void Connection::accept(void *server)
-{
-	if (active())
-	{
-		return;
-	}
-
-	active_ = true;
-
-	client_ = malloc(sizeof(uv_tcp_t));
-	uv_tcp_init(uv_default_loop(), ((uv_tcp_t*)client_));
-	((uv_tcp_t*)client_)->data = this;
-
-	if (uv_accept((uv_stream_t*)server, (uv_stream_t *)client_) == 0)
-	{
-		TCPEvent_->onNewConnect(getSocketID());
-
-		//recv data
-		uv_read_start((uv_stream_t *)client_,
-
-			//alloc memory
-			[](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
-			buf->base = (char *)malloc(suggested_size);
-			buf->len = suggested_size;
-			},
-
-			//callback
-			[](uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
-			auto conn = (Connection *)client->data;
-			if (nread > 0)
-			{
-				std::copy(buf->base, buf->base + nread, std::back_inserter(conn->readBuf_));
-				//parse data
-				conn->parseDsata();
-				return;
-			}
-			if (nread < 0)
-			{
-				if (nread != UV_EOF)
-					fprintf(stderr, "Read error %s\n", uv_err_name(nread));
-				conn->close();
-			}
-
-			free(buf->base);
-		});
-	}
-	else
-	{
-		close();
-	}
-}
 bool Connection::active() const
 {
 	return active_;
@@ -110,6 +59,21 @@ uint16_t Connection::getRoundIndex() const
 	return roundIndex_;
 }
 
+void Connection::attach(void* client)
+{
+	if (active())
+	{
+		return;
+	}
+
+	active_ = true;
+	client_ = client;
+	((uv_tcp_t*)client_)->data = this;
+
+	TCPEvent_->onNewConnect(getSocketID());
+	recvData();
+}
+
 void Connection::parseDsata()
 {
 	while (readBuf_.size() >= sizeof(uint32_t))
@@ -130,6 +94,39 @@ void Connection::parseDsata()
 
 		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(uint32_t) + len);
 	}
+}
+
+void Connection::recvData()
+{
+	//recv data
+	uv_read_start((uv_stream_t *)client_,
+
+	//alloc memory
+	[](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) 
+	{
+		buf->base = (char *)malloc(suggested_size);
+		buf->len = suggested_size;
+	},
+
+		//callback
+		[](uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
+		auto conn = (Connection *)client->data;
+		if (nread > 0)
+		{
+			std::copy(buf->base, buf->base + nread, std::back_inserter(conn->readBuf_));
+			//parse data
+			conn->parseDsata();
+			return;
+		}
+		if (nread < 0)
+		{
+			if (nread != UV_EOF)
+				fprintf(stderr, "Read error %s\n", uv_err_name(nread));
+			conn->close();
+		}
+
+		free(buf->base);
+	});
 }
 
 void Connection::send(const void *p, size_t n)

@@ -140,8 +140,10 @@
     <ClInclude Include="..\..\ServerEngine\EventDispatcher.h" />
     <ClInclude Include="..\..\ServerEngine\HttpClient.h" />
     <ClInclude Include="..\..\ServerEngine\MemoryStream.h" />
+    <ClInclude Include="..\..\ServerEngine\PacketHelper.h" />
     <ClInclude Include="..\..\ServerEngine\Signal.h" />
-    <ClInclude Include="..\..\ServerEngine\stdafx.h" />
+    <ClInclude Include="..\..\ServerEngine\ServerEngine.h" />
+    <ClInclude Include="..\..\ServerEngine\TCPClient.h" />
     <ClInclude Include="..\..\ServerEngine\TCPServer.h" />
     <ClInclude Include="..\..\ServerEngine\ThreadPool.h" />
     <ClInclude Include="..\..\ServerEngine\Timer.h" />
@@ -151,7 +153,9 @@
     <ClCompile Include="..\..\ServerEngine\EventDispatcher.cpp" />
     <ClCompile Include="..\..\ServerEngine\HttpClient.cpp" />
     <ClCompile Include="..\..\ServerEngine\MemoryStream.cpp" />
+    <ClCompile Include="..\..\ServerEngine\PacketHelper.cpp" />
     <ClCompile Include="..\..\ServerEngine\Signal.cpp" />
+    <ClCompile Include="..\..\ServerEngine\TCPClient.cpp" />
     <ClCompile Include="..\..\ServerEngine\TCPServer.cpp" />
     <ClCompile Include="..\..\ServerEngine\ThreadPool.cpp" />
     <ClCompile Include="..\..\ServerEngine\Timer.cpp" />
