@@ -41,6 +41,7 @@ public:
 
 private:
 	void threadFunc();
+	void pushLog(const std::string& logString);
 private:
 	LogMode logMode_;
 	std::string saveFileDir_;
