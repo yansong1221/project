@@ -2,7 +2,7 @@
 #include "ServerEngine.h"
 #include <vector>
 
-class ITCPEvent
+class ENGINE_API ITCPEvent
 {
 public:
     virtual void onNewConnect(uint32_t socketID) = 0;
@@ -39,7 +39,7 @@ private:
 
     bool active_;
 
-    std::vector<char> readBuf_;
+	std::vector<char> readBuf_;
 
 	void* client_;
 

@@ -11,23 +11,7 @@
 #include <stdexcept>
 #include <string>
 
-#define STREAM_ENABLE_TYPE				\
-typename = typename std::enable_if<		\
-std::is_same<T, uint8_t>::value ||		\
-std::is_same<T, uint16_t>::value ||		\
-std::is_same<T, uint32_t>::value ||		\
-std::is_same<T, uint64_t>::value ||		\
-std::is_same<T, int8_t>::value ||		\
-std::is_same<T, int16_t>::value ||		\
-std::is_same<T, int32_t>::value ||		\
-std::is_same<T, int64_t>::value ||		\
-std::is_same<T, double>::value ||		\
-std::is_same<T, float>::value ||		\
-std::is_class<T>::value					\
->::type
-
-
-class ENGINE_API MemoryStreamException : public std::exception
+class MemoryStreamException : public std::exception
 {
 public:
 	MemoryStreamException(const std::string& _Message) :message_(_Message) {}
@@ -53,7 +37,7 @@ public:
 		value = read<T>();
 		return *this;
 	}
-	template <typename T, STREAM_ENABLE_TYPE>
+	template <typename T>
 	T read()
 	{
 		if (readPos_ + sizeof(T) > writePos_)
@@ -74,13 +58,13 @@ public:
 	std::string readAll();
 
 	//–Ú¡–ªØ
-	template <typename T, STREAM_ENABLE_TYPE> CMemoryStream& operator << (const T& value)
+	template <typename T> CMemoryStream& operator << (const T& value)
 	{
 		append(value);
 		return *this;
 	}
 
-	template <typename T, STREAM_ENABLE_TYPE>
+	template <typename T>
 	void append(const T& value) 
 	{
 		return appendBinary(&value, sizeof(T));

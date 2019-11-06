@@ -48,6 +48,9 @@
     <ClInclude Include="..\..\ServerEngine\PacketHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ServerEngine\Logger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ServerEngine\Connection.cpp">
@@ -78,6 +81,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ServerEngine\PacketHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ServerEngine\Logger.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

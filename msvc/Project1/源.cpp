@@ -25,7 +25,7 @@ class taskTest : public IThreadTask
 public:
 	~taskTest()
 	{
-		std::cout << "线程析构" << std::endl;
+		LOG(INFO) << "线程析构";
 	}
 public:
 	virtual void run()
