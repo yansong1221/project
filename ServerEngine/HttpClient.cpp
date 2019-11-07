@@ -40,7 +40,7 @@ bool HttpClient::sendHttpRequest(const std::string& method,
 	
 	if (!query.empty())
 	{
-		FullUrl += TEXT("?");
+		FullUrl += "?";
 		FullUrl += query;
 	}
 
@@ -53,7 +53,7 @@ bool HttpClient::sendHttpRequest(const std::string& method,
 	curl_easy_setopt(pCurl, CURLOPT_HEADERDATA, &m_Headers);
 
 	
-	if (method == TEXT("POST"))
+	if (method == "POST")
 	{
 		curl_easy_setopt(pCurl, CURLOPT_POST, 1);
 		curl_easy_setopt(pCurl, CURLOPT_POSTFIELDS, body.data());

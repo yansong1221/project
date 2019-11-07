@@ -5,12 +5,19 @@
 #include "Signal.h"
 #include "ThreadPool.h"
 
+class IEventDispatcher
+{
+public:
+	virtual bool OnStartUp() = 0;
+	virtual bool OnShutDown() = 0;
+};
+
 class ENGINE_API EventDispatcher
 {
 private:
     /* data */
 public:
-    EventDispatcher(/* args */);
+    EventDispatcher(IEventDispatcher* handle);
     ~EventDispatcher();
 
 public:
@@ -30,6 +37,8 @@ public:
 
 	void close();
 private:
+	IEventDispatcher* eventHandle_;
+
 	Timer timer_;
 	Signal signal_;
 	ThreadPool threadPool_;

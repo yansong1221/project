@@ -1,7 +1,8 @@
 #include "EventDispatcher.h"
 #include <uv.h>
 
-EventDispatcher::EventDispatcher(/* args */)
+EventDispatcher::EventDispatcher(IEventDispatcher* handle)
+	:eventHandle_(handle)
 {
 }
 
@@ -37,11 +38,26 @@ void EventDispatcher::cancelTask(IThreadTask* task)
 
 int EventDispatcher::run()
 {
-   return uv_run(uv_default_loop(), UV_RUN_DEFAULT);
+	if (eventHandle_->OnStartUp() == false)
+	{
+		return -1;
+	}
+
+	addSignal(SIGINT, [this]() 
+	{
+		close(); 
+	});
+
+	return uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 }
 
 void EventDispatcher::close()
 {
+	if (eventHandle_->OnShutDown() == false)
+	{
+		return;
+	}
+
 	timer_.close();
 	signal_.close();
 	threadPool_.close();

@@ -1,8 +1,9 @@
 #pragma once
 
-#ifdef BUILD_ENGINE_DLL
 #pragma warning(disable:4251)
 #pragma warning(disable:4099)
+
+#ifdef BUILD_ENGINE_DLL
 #define ENGINE_API  __declspec(dllexport)
 #else
 #define ENGINE_API __declspec(dllimport)
@@ -16,4 +17,5 @@
 #include "ThreadPool.h"
 #include "Timer.h"
 #include "TCPClient.h"
+#include "Logger.h"
 #endif

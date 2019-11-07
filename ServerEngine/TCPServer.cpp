@@ -3,8 +3,9 @@
 
 #include <algorithm>
 
-TCPServer::TCPServer(/* args */)
-    :TCPEvent_(nullptr)
+TCPServer::TCPServer(ITCPEvent* handle)
+    :TCPEvent_(handle),
+	server_(nullptr)
 {
 }
 
@@ -14,6 +15,8 @@ TCPServer::~TCPServer()
 
 bool TCPServer::listen(int port, int backlog)
 {
+	if (server_ != nullptr) return false;
+
 	server_ = malloc(sizeof(uv_tcp_t));
     uv_tcp_init(uv_default_loop(), (uv_tcp_t*)server_);
 	((uv_tcp_t*)server_)->data = this;
@@ -66,6 +69,8 @@ bool TCPServer::listen(int port, int backlog)
 }
 void TCPServer::close()
 {
+	if (server_ == nullptr) return;
+
 	for (const auto& v : conns_)
 	{
 		v->close();
@@ -73,19 +78,15 @@ void TCPServer::close()
 
 	uv_close((uv_handle_t *)server_, [](uv_handle_t* handle)
 	{
-		auto srv = (TCPServer*)handle->data;
-		srv->server_ = nullptr;
 		free(handle);
 	});
+	server_ = nullptr;
 }
-void TCPServer::setEventHandle(ITCPEvent* handle)
-{
-    TCPEvent_ = handle;
-}
-
 
 void TCPServer::sendData(uint32_t socketID, const void* p, size_t n)
 {
+	if (server_ == nullptr) return;
+
 	uint16_t bindIndex = socketID & 0xffff0000;
 	uint16_t roundIndex = (socketID & 0x0000ffff) >> 16;
 
@@ -100,6 +101,8 @@ void TCPServer::sendData(uint32_t socketID, const void* p, size_t n)
 
 void TCPServer::closeSocket(uint32_t socketID)
 {
+	if (server_ == nullptr) return;
+
 	uint16_t bindIndex = socketID & 0xffff0000;
 	uint16_t roundIndex = (socketID & 0x0000ffff) >> 16;
 

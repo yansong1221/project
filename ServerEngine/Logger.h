@@ -7,24 +7,26 @@
 #include <thread>
 #include <condition_variable>
 #include <mutex>
+#include <future>
 
 class ENGINE_API Logger
 {
 public:
 
-	enum LogMode
+	enum LogLevel
 	{
-		LOGGER_MODE_FILE,
-		LOGGER_MODE_CONSOLE,
-		LOGGER_MODE_BOTH,
+		LOGLEVEL_INFO,
+		LOGLEVEL_WARNING,
+		LOGLEVEL_ERROR,	
 	};
 
 	struct tagLogItem
 	{
-		std::string saveFileDir;
-		LogMode logMode;
-		std::string logString;
+		std::string		outString;
+		std::string		fileName;
 	};
+
+
 
 	Logger();
 	~Logger();
@@ -33,17 +35,17 @@ public:
 	static Logger& getInstance();
 
 public:
-	void startLogger(const std::string& saveFileDir, LogMode mode = LOGGER_MODE_BOTH);
+	bool startLogger(const std::string& saveFileDir);
+	void stopLogger();
 
 	void warning(const char* format, ...);
 	void error(const char* format, ...);
 	void info(const char* format, ...);
 
 private:
-	void threadFunc();
-	void pushLog(const std::string& logString);
+	void threadFunc(std::promise<bool>& run);
+	void pushLog(const char* logString, LogLevel level);
 private:
-	LogMode logMode_;
 	std::string saveFileDir_;
 
 	std::thread workThread_;

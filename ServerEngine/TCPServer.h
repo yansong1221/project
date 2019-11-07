@@ -9,13 +9,12 @@ class ENGINE_API TCPServer
 private:
     /* data */
 public:
-    TCPServer(/* args */);
+    TCPServer(ITCPEvent* handle);
     ~TCPServer();
 
 public:
     bool listen(int port, int backlog);
     void close();
-    void setEventHandle(ITCPEvent* handle);
 
 	void sendData(uint32_t socketID, const void* p, size_t n);
 
