@@ -2,6 +2,15 @@
 
 #include <uv.h>
 
+enum ConnStatus
+{
+	CONNSTATUS_DEATH,						//死亡连接
+	CONNSTATUS_DANGER,						//需要发送心跳的连接
+	CONNSTATUS_SAFE							//安全连接
+};
+
+#define MAX_PACKET_SIZE						1024
+
 typedef struct
 {
 	uv_write_t req;
@@ -36,21 +45,21 @@ void Connection::close()
 	}
 	uv_close((uv_handle_t *)client_, [](uv_handle_t* handle) 
 	{
-		auto conn = ((Connection*)handle->data);
-
-		conn->TCPEvent_->onCloseConnect(conn->getSocketID());
-
-		conn->active_ = false;
-		conn->readBuf_.clear();
-		conn->client_ = nullptr;
-
-		do
-		{
-			conn->roundIndex_++;
-		} while (conn->roundIndex_ == 0);
-
 		free(handle);
 	});
+
+	TCPEvent_->onCloseConnect(getSocketID());
+
+	active_ = false;
+	readBuf_.clear();
+	client_ = nullptr;
+
+	do
+	{
+		roundIndex_++;
+	} while (roundIndex_ == 0);
+
+	connStatus_ = CONNSTATUS_DEATH;
 }
 
 
@@ -65,7 +74,7 @@ void Connection::attach(void* client)
 	{
 		return;
 	}
-
+	connStatus_ = CONNSTATUS_SAFE;
 	active_ = true;
 	client_ = client;
 	((uv_tcp_t*)client_)->data = this;
@@ -74,25 +83,36 @@ void Connection::attach(void* client)
 	recvData();
 }
 
+bool Connection::isDeath() const
+{
+	return connStatus_ == CONNSTATUS_DEATH;
+}
+
+bool Connection::needPing() const
+{
+	return connStatus_ == CONNSTATUS_DANGER;
+}
+
 void Connection::parseDsata()
 {
-	while (readBuf_.size() >= sizeof(uint32_t))
-	{
-		uint32_t len = *(uint32_t*)readBuf_.data();
-		len = ::ntohl(len);
+	connStatus_ = CONNSTATUS_SAFE;
 
-		if (len >= 1024)
+	while (readBuf_.size() >= sizeof(TCPHeader))
+	{
+		TCPHeader* header = (TCPHeader*)readBuf_.data();
+		auto len = ::ntohl(header->len);
+		auto msgID = ::ntohl(header->msgID);
+
+		if (len >= MAX_PACKET_SIZE)
 		{
 			close();
 			break;
 		}
 
-		if(len >= readBuf_.size() + sizeof(uint32_t)) break;
+		if(len >= readBuf_.size() + sizeof(TCPHeader)) break;
+		TCPEvent_->onNewMessage(getSocketID(), msgID, &readBuf_[sizeof(TCPHeader)], len);
 
-		const char* data = &readBuf_[sizeof(uint32_t)];
-		TCPEvent_->onNewMessage(getSocketID(), data, len);
-
-		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(uint32_t) + len);
+		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(TCPHeader) + len);
 	}
 }
 
@@ -129,23 +149,25 @@ void Connection::recvData()
 	});
 }
 
-void Connection::send(const void *p, size_t n)
+void Connection::send(uint32_t msgID,const void *data, size_t sz)
 {
 	if (active() == false)
 	{
 		return;
 	}
 
-	uint32_t len = ::htonl(n);
-
+	TCPHeader Header = {0};
+	Header.msgID = ::htonl(msgID);
+	Header.len = ::htonl(sz);
 
 	write_req_t *req = (write_req_t *)malloc(sizeof(write_req_t));
 
-	char *buf = (char *)malloc(n + sizeof(uint32_t));
-	memcpy(buf, &len, sizeof(uint32_t));
-	memcpy(buf + sizeof(uint32_t), p, n);
+	char *buf = (char *)malloc(sz + sizeof(TCPHeader));
+	memcpy(buf, &Header, sizeof(TCPHeader));
+	memcpy(buf + sizeof(TCPHeader), data, sz);
 
-	req->buf = uv_buf_init(buf, n);
+	req->buf = uv_buf_init(buf, sizeof(TCPHeader) + sz);
+
 	uv_write((uv_write_t *)req, (uv_stream_t *)client_, &req->buf, 1,
 		//callback
 		[](uv_write_t *req, int status) {

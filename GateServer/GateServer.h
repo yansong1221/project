@@ -14,7 +14,7 @@ protected:
 
 
 	virtual void onNewConnect(uint32_t socketID) override;
-	virtual void onNewMessage(uint32_t socketID, const void *p, size_t n) override;
+	virtual void onNewMessage(uint32_t socketID,uint32_t msgID ,const void *data, size_t sz) override;
 	virtual void onCloseConnect(uint32_t socketID) override;
 
 public:

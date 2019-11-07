@@ -83,7 +83,7 @@ void TCPServer::close()
 	server_ = nullptr;
 }
 
-void TCPServer::sendData(uint32_t socketID, const void* p, size_t n)
+void TCPServer::sendData(uint32_t socketID, uint32_t msgID, const void* data, size_t sz)
 {
 	if (server_ == nullptr) return;
 
@@ -95,7 +95,7 @@ void TCPServer::sendData(uint32_t socketID, const void* p, size_t n)
 	auto conn = conns_.at(bindIndex);
 	if (conn->getRoundIndex() != roundIndex) return;
 
-	conn->send(p, n);
+	conn->send(msgID, data, sz);
 }
 
 
@@ -112,6 +112,17 @@ void TCPServer::closeSocket(uint32_t socketID)
 	if (conn->getRoundIndex() != roundIndex) return;
 
 	conn->close();
+}
+
+void TCPServer::checkConnection()
+{
+	for (auto conn : conns_)
+	{
+		if (conn->needPing())
+		{
+
+		}
+	}
 }
 
 Connection * TCPServer::createConnection()

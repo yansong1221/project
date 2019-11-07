@@ -34,7 +34,7 @@ void GateServer::onNewConnect(uint32_t socketID)
 
 }
 
-void GateServer::onNewMessage(uint32_t socketID, const void *p, size_t n)
+void GateServer::onNewMessage(uint32_t socketID, uint32_t msgID, const void *data, size_t sz)
 {
 
 }

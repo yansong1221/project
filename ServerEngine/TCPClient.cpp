@@ -66,17 +66,19 @@ void TCPClient::setCloseHandle(ClientCloseHandle handle)
 	closeHandle_ = handle;
 }
 
-void TCPClient::sendData(const void* data, size_t sz)
+void TCPClient::sendData(uint32_t msgID,const void* data, size_t sz)
 {
-	uint32_t len = ::htonl(sz);
+	TCPHeader header = { 0 };
+	header.len = ::htonl(sz);
+	header.msgID = ::htonl(msgID);
 
 	write_req_t *req = (write_req_t *)malloc(sizeof(write_req_t));
 
-	char *buf = (char *)malloc(sz + sizeof(uint32_t));
-	memcpy(buf, &len, sizeof(uint32_t));
-	memcpy(buf + sizeof(uint32_t), data, sz);
+	char *buf = (char *)malloc(sz + sizeof(sizeof(TCPHeader)));
+	memcpy(buf, &header, sizeof(TCPHeader));
+	memcpy(buf + sizeof(TCPHeader), data, sz);
 
-	req->buf = uv_buf_init(buf, sz + sizeof(uint32_t));
+	req->buf = uv_buf_init(buf, sz + sizeof(TCPHeader));
 	uv_write((uv_write_t *)req, (uv_stream_t *)client_, &req->buf, 1,
 		//callback
 
@@ -92,23 +94,16 @@ void TCPClient::sendData(const void* data, size_t sz)
 }
 void TCPClient::parseDsata()
 {
-	while (readBuf_.size() >= sizeof(uint32_t))
+	while (readBuf_.size() >= sizeof(TCPHeader))
 	{
-		uint32_t len = *(uint32_t*)readBuf_.data();
-		len = ::ntohl(len);
+		TCPHeader header = *(TCPHeader*)readBuf_.data();
+		header.len = ::ntohl(header.len);
+		header.msgID = ::ntohl(header.msgID);
 
-		if (len >= 1024)
-		{
-			close();
-			break;
-		}
+		if (header.len >= readBuf_.size() + sizeof(TCPHeader)) break;
+		readHandle_(header.msgID, &readBuf_[sizeof(TCPHeader)], header.len);
 
-		if (len >= readBuf_.size() + sizeof(uint32_t)) break;
-
-		const char* data = &readBuf_[sizeof(uint32_t)];
-		readHandle_(data, len);
-
-		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(uint32_t) + len);
+		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(TCPHeader) + header.len);
 	}
 }
 void TCPClient::recvData()

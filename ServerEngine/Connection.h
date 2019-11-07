@@ -6,7 +6,7 @@ class ENGINE_API ITCPEvent
 {
 public:
     virtual void onNewConnect(uint32_t socketID) = 0;
-    virtual void onNewMessage(uint32_t socketID,const void *p, size_t n) = 0;
+    virtual void onNewMessage(uint32_t socketID,uint32_t msgID, const void *data, size_t sz) = 0;
     virtual void onCloseConnect(uint32_t socketID) = 0;
 };
 
@@ -23,13 +23,16 @@ public:
 
     bool active() const;
 
-    void send(const void* p,size_t n);
+    void send(uint32_t msgID,const void* p,size_t n);
 
     void close();
 
 	uint16_t getRoundIndex() const;
 
 	void attach(void* client);
+
+	bool isDeath() const;
+	bool needPing() const;
 private:
 	void parseDsata();
 	void recvData();
@@ -44,4 +47,6 @@ private:
 	void* client_;
 
 	ITCPEvent* TCPEvent_;
+
+	int connStatus_;
 };
