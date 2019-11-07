@@ -30,9 +30,7 @@ public:
 	uint16_t getRoundIndex() const;
 
 	void attach(void* client);
-
-	bool isDeath() const;
-	bool needPing() const;
+	void check();
 private:
 	void parseDsata();
 	void recvData();

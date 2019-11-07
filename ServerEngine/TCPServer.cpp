@@ -91,8 +91,9 @@ void TCPServer::sendData(uint32_t socketID, uint32_t msgID, const void* data, si
 	uint16_t roundIndex = (socketID & 0x0000ffff) >> 16;
 
 	if (bindIndex > conns_.size()) return;
+	if (bindIndex == 0) return;
 
-	auto conn = conns_.at(bindIndex);
+	auto conn = conns_.at(bindIndex - 1);
 	if (conn->getRoundIndex() != roundIndex) return;
 
 	conn->send(msgID, data, sz);
@@ -107,8 +108,9 @@ void TCPServer::closeSocket(uint32_t socketID)
 	uint16_t roundIndex = (socketID & 0x0000ffff) >> 16;
 
 	if (bindIndex > conns_.size()) return;
+	if (bindIndex == 0) return;
 
-	auto conn = conns_.at(bindIndex);
+	auto conn = conns_.at(bindIndex - 1);
 	if (conn->getRoundIndex() != roundIndex) return;
 
 	conn->close();
@@ -118,10 +120,8 @@ void TCPServer::checkConnection()
 {
 	for (auto conn : conns_)
 	{
-		if (conn->needPing())
-		{
-
-		}
+		if(conn->active() == false) continue;
+		conn->check();
 	}
 }
 
@@ -133,7 +133,7 @@ Connection * TCPServer::createConnection()
 	});
 	if (iter != conns_.end()) return *iter;
 
-	auto conn = new Connection(conns_.size(), TCPEvent_);
+	auto conn = new Connection(conns_.size() + 1, TCPEvent_);
 	conns_.push_back(conn);
 	return conn;
 }

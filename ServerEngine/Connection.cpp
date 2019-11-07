@@ -83,14 +83,24 @@ void Connection::attach(void* client)
 	recvData();
 }
 
-bool Connection::isDeath() const
+void Connection::check()
 {
-	return connStatus_ == CONNSTATUS_DEATH;
-}
-
-bool Connection::needPing() const
-{
-	return connStatus_ == CONNSTATUS_DANGER;
+	if (active() == false) return;
+	switch (connStatus_)
+	{
+	case CONNSTATUS_SAFE:	
+		connStatus_ = CONNSTATUS_DANGER;
+		break;
+	case CONNSTATUS_DANGER:
+		connStatus_ = CONNSTATUS_DEATH;
+		send(ENGINE_PING_MSGID, nullptr, 0);
+		break;
+	case CONNSTATUS_DEATH:
+		close();
+		break;
+	default:
+		break;
+	}
 }
 
 void Connection::parseDsata()
@@ -110,8 +120,11 @@ void Connection::parseDsata()
 		}
 
 		if(len >= readBuf_.size() + sizeof(TCPHeader)) break;
-		TCPEvent_->onNewMessage(getSocketID(), msgID, &readBuf_[sizeof(TCPHeader)], len);
 
+		if (msgID != ENGINE_PING_MSGID)
+		{
+			TCPEvent_->onNewMessage(getSocketID(), msgID, &readBuf_[sizeof(TCPHeader)], len);
+		}
 		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(TCPHeader) + len);
 	}
 }
@@ -164,7 +177,7 @@ void Connection::send(uint32_t msgID,const void *data, size_t sz)
 
 	char *buf = (char *)malloc(sz + sizeof(TCPHeader));
 	memcpy(buf, &Header, sizeof(TCPHeader));
-	memcpy(buf + sizeof(TCPHeader), data, sz);
+	if(sz != 0) memcpy(buf + sizeof(TCPHeader), data, sz);
 
 	req->buf = uv_buf_init(buf, sizeof(TCPHeader) + sz);
 

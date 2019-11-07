@@ -44,6 +44,7 @@ void TCPClient::connect(const std::string& host, int port)
 		else
 		{
 			client->connectHandle_(true);
+			client->recvData();
 		}
 
 		free(req);
@@ -74,9 +75,9 @@ void TCPClient::sendData(uint32_t msgID,const void* data, size_t sz)
 
 	write_req_t *req = (write_req_t *)malloc(sizeof(write_req_t));
 
-	char *buf = (char *)malloc(sz + sizeof(sizeof(TCPHeader)));
+	char *buf = (char *)malloc(sz + sizeof(TCPHeader));
 	memcpy(buf, &header, sizeof(TCPHeader));
-	memcpy(buf + sizeof(TCPHeader), data, sz);
+	if(sz != 0) memcpy(buf + sizeof(TCPHeader), data, sz);
 
 	req->buf = uv_buf_init(buf, sz + sizeof(TCPHeader));
 	uv_write((uv_write_t *)req, (uv_stream_t *)client_, &req->buf, 1,
@@ -101,8 +102,15 @@ void TCPClient::parseDsata()
 		header.msgID = ::ntohl(header.msgID);
 
 		if (header.len >= readBuf_.size() + sizeof(TCPHeader)) break;
-		readHandle_(header.msgID, &readBuf_[sizeof(TCPHeader)], header.len);
 
+		if (header.msgID == ENGINE_PING_MSGID)
+		{
+			sendData(ENGINE_PING_MSGID, nullptr, 0);
+		}
+		else
+		{
+			readHandle_(header.msgID, &readBuf_[sizeof(TCPHeader)], header.len);
+		}
 		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(TCPHeader) + header.len);
 	}
 }

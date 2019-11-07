@@ -14,6 +14,8 @@ struct TCPHeader
 	uint32_t	len;
 };
 
+#define ENGINE_PING_MSGID				1
+
 #pragma pack()
 #else
 #define ENGINE_API __declspec(dllimport)
