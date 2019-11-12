@@ -3,8 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _WIN32
 #pragma warning(disable:4251)
 #pragma warning(disable:4099)
+#endif
 
 #pragma pack(1)
 struct TCPHeader

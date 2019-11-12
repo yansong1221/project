@@ -1,11 +1,17 @@
 #include "Logger.h"
 
-#include "fmt/core.h"
+#include <fmt/core.h>
 #include <stdarg.h>
 #include <iostream>
-#include <direct.h>
-#include <fstream>
 
+#ifdef _WIN32
+#include <direct.h>
+#else
+#include<sys/stat.h>
+#endif
+
+#include <fstream>
+#include <functional>
 
 static Logger* g_Logger = nullptr;
 
@@ -177,7 +183,7 @@ void Logger::threadFunc(std::promise<bool>& run)
 		{
 			ul.lock();
 
-			tagLogItem item = logQue_.back();
+			tagLogItem item = logQue_.front();
 			logQue_.pop();
 
 			ul.unlock();
@@ -215,7 +221,7 @@ void Logger::pushLog(const char* logString, LogLevel level)
 	Item.outString = outString;
 
 	std::unique_lock<std::mutex> ul(mtx_);
-	logQue_.push(std::move(Item));
+	logQue_.push(Item);
 	ul.unlock();
 
 	cv_.notify_all();

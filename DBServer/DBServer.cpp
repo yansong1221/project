@@ -17,12 +17,11 @@ DBServer::~DBServer()
 bool DBServer::OnStartUp()
 {
 	Logger::getInstance().startLogger("./log/DBServer/");
-	Logger::getInstance().info("³õÊ¼»¯·şÎñÆ÷");
-
-	Logger::getInstance().info("¿ªÊ¼¼àÌı¶Ë¿Ú:%d", DEFAULT_LISTEN_PORT);
+	Logger::getInstance().info("åˆå§‹åŒ–æœåŠ¡å™¨");
+	Logger::getInstance().info("å¼€å§‹ç›‘å¬ç«¯å£:%d", DEFAULT_LISTEN_PORT);
 	if(TCPServer_.listen(DEFAULT_LISTEN_PORT, 1024) == false) return false;
 
-	//¼ì²éĞÄÌø
+	//æ£€æŸ¥å¿ƒè·³
 	eventDispatcher_.addTimer(2000, [this](TimerWapper timer)
 	{
 		TCPServer_.checkConnection();
@@ -38,17 +37,17 @@ bool DBServer::OnShutDown()
 
 void DBServer::onNewConnect(uint32_t socketID)
 {
-	Logger::getInstance().info("ÓÃ»§Á¬½Ó:%d", socketID);
+	Logger::getInstance().info("ç”¨æˆ·è¿æ¥:%d", socketID);
 }
 
 void DBServer::onNewMessage(uint32_t socketID, uint32_t msgID, const void *data, size_t sz)
 {
-	Logger::getInstance().info("ÓÃ»§ÏûÏ¢:socketID:%d, msgID:%d,size:%d", socketID, msgID,sz);
+	Logger::getInstance().info("ç”¨æˆ·æ¶ˆæ¯:socketID:%d, msgID:%d,size:%d", socketID, msgID,sz);
 }
 
 void DBServer::onCloseConnect(uint32_t socketID)
 {
-	Logger::getInstance().info("ÓÃ»§¶Ï¿ªÁ¬½Ó:%d", socketID);
+	Logger::getInstance().info("ç”¨æˆ·æ–­å¼€è¿æ¥:%d", socketID);
 }
 
 int DBServer::run()

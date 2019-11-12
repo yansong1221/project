@@ -6,4 +6,4 @@ add_definitions(-D BUILD_ENGINE_DLL)
 include_directories("/usr/local/include")
 
 aux_source_directory(./ SRC)
-ADD_LIBRARY(ServerEngine STATIC ${SRC})
+ADD_LIBRARY(ServerEngine SHARED ${SRC})
