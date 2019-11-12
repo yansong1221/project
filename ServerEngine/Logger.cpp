@@ -177,8 +177,7 @@ void Logger::threadFunc(std::promise<bool>& run)
 			return runStatus_ == false || logQue_.empty() == false;
 		});
 		ul.unlock();
-		if (runStatus_ == false) return;
-
+		
 		while (!logQue_.empty())
 		{
 			ul.lock();
@@ -194,6 +193,8 @@ void Logger::threadFunc(std::promise<bool>& run)
 			fout << item.outString << std::endl;
 			
 		}
+	
+		if (runStatus_ == false) return;
 	}	
 }
 

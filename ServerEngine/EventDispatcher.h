@@ -22,14 +22,14 @@ public:
 
 public:
 
-	//¶¨Ê±Æ÷
+	//å®šæ—¶å™¨
 	TimerWapper addTimer(uint64_t timeout, TimerHandle handle);
 
-	//ĞÅºÅÏà¹Ø
+	//ä¿¡å·ç›¸å…³
 	void addSignal(int signum, SignalHandle handle);
 	void removeSignal(int signum);
 
-	//Ïß³Ì³Ø
+	//çº¿ç¨‹æ± 
 	void addTask(IThreadTask* task);
 	void cancelTask(IThreadTask* task);
 

@@ -31,6 +31,9 @@ bool DBServer::OnStartUp()
 }
 bool DBServer::OnShutDown()
 {
+	Logger::getInstance().info("数据库服务器即将关闭");
+	
+	TCPServer_.close();
 	Logger::getInstance().stopLogger();
 	return true;
 }

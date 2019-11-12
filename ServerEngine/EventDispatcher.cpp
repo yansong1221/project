@@ -47,8 +47,15 @@ int EventDispatcher::run()
 	{
 		close(); 
 	});
+	addSignal(SIGKILL, [this]() 
+	{
+		close(); 
+	});
 
-	return uv_run(uv_default_loop(), UV_RUN_DEFAULT);
+	auto code = uv_run(uv_default_loop(), UV_RUN_DEFAULT);
+	uv_loop_close(uv_default_loop());
+	
+	return code;
 }
 
 void EventDispatcher::close()
