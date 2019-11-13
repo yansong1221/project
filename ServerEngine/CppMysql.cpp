@@ -5,7 +5,7 @@
 #include <mysql/mysql.h>
 #include <mysql/errmsg.h>
 
-MySQLException::MySQLException(int num, const std::string& str)
+MYSQLException::MYSQLException(int num, const std::string& str)
 	:errorNum_(num),
 	std::exception(str.c_str())
 {
@@ -13,12 +13,12 @@ MySQLException::MySQLException(int num, const std::string& str)
 }
 
 
-int MySQLException::getErrorNum() const
+int MYSQLException::getErrorNum() const
 {
 	return errorNum_;
 }
 
-bool MySQLException::IsConnectError() const
+bool MYSQLException::IsConnectError() const
 {
 	if (errorNum_ == CR_SERVER_GONE_ERROR || errorNum_ == CR_SERVER_LOST)
 	{
@@ -28,7 +28,7 @@ bool MySQLException::IsConnectError() const
 	return false;
 }
 
-MySQLQuery::MySQLQuery()
+MYSQLQuery::MYSQLQuery()
 {
 	m_MysqlRes = NULL;
 	_field = NULL;
@@ -37,12 +37,12 @@ MySQLQuery::MySQLQuery()
 	_field_count = 0;
 }
 
-MySQLQuery::MySQLQuery(MySQLQuery& rQuery)
+MYSQLQuery::MYSQLQuery(MYSQLQuery& rQuery)
 {
 	*this = rQuery;
 }
 
-MySQLQuery& MySQLQuery::operator=(MySQLQuery& rQuery)
+MYSQLQuery& MYSQLQuery::operator=(MYSQLQuery& rQuery)
 {
 	if (this == &rQuery)
 	{
@@ -73,12 +73,12 @@ MySQLQuery& MySQLQuery::operator=(MySQLQuery& rQuery)
 	return *this;
 }
 
-MySQLQuery::~MySQLQuery()
+MYSQLQuery::~MYSQLQuery()
 {
 	freeRes();
 }
 
-void MySQLQuery::freeRes()
+void MYSQLQuery::freeRes()
 {
 	if ( m_MysqlRes != NULL )
 	{
@@ -87,22 +87,22 @@ void MySQLQuery::freeRes()
 	}
 }
 
-bool MySQLQuery::isRecordsetOpened() const
+bool MYSQLQuery::isRecordsetOpened() const
 {
 	return m_MysqlRes != NULL;
 }
 
-int MySQLQuery::numRow()
+int MYSQLQuery::numRow()
 {
 	return _row_count;
 }
 
-int MySQLQuery::numFields()
+int MYSQLQuery::numFields()
 {
 	return _field_count;
 }
 
-int MySQLQuery::seekRow(int offerset)
+int MYSQLQuery::seekRow(int offerset)
 {
 	if (offerset < 0)
 	{
@@ -121,7 +121,7 @@ int MySQLQuery::seekRow(int offerset)
 	return offerset;
 }
 
-int MySQLQuery::fieldIndex(const char* szField)
+int MYSQLQuery::fieldIndex(const char* szField)
 {
 	if ( NULL == m_MysqlRes )
 	{
@@ -149,7 +149,7 @@ int MySQLQuery::fieldIndex(const char* szField)
 	return -1;
 }
 
-const char* MySQLQuery::fieldName(int nCol)
+const char* MYSQLQuery::fieldName(int nCol)
 {
 	if ( m_MysqlRes == NULL )
 	{
@@ -167,7 +167,7 @@ const char* MySQLQuery::fieldName(int nCol)
 	return  NULL;
 }
 
-int MySQLQuery::getIntField(int nField, int nNullValue/*=0*/)
+int MYSQLQuery::getIntField(int nField, int nNullValue/*=0*/)
 {
 	if ( NULL == m_MysqlRes )
 	{
@@ -187,7 +187,7 @@ int MySQLQuery::getIntField(int nField, int nNullValue/*=0*/)
 	return atoi(_row[nField]);
 }
 
-int MySQLQuery::getIntField(const char* szField, int nNullValue/*=0*/)
+int MYSQLQuery::getIntField(const char* szField, int nNullValue/*=0*/)
 {
 	if ( NULL == m_MysqlRes || NULL == szField )
 	{
@@ -208,7 +208,7 @@ int MySQLQuery::getIntField(const char* szField, int nNullValue/*=0*/)
 	return atoi(filed);
 }
 
-const char* MySQLQuery::getStringField(int nField, const char* szNullValue/*=""*/)
+const char* MYSQLQuery::getStringField(int nField, const char* szNullValue/*=""*/)
 {
 	if ( NULL == m_MysqlRes )
 	{
@@ -219,7 +219,7 @@ const char* MySQLQuery::getStringField(int nField, const char* szNullValue/*=""*
 	{
 		char buffer[512] = { 0 };
 		sprintf(buffer, "out of range fieldIndex:%d", nField);
-		throw MySQLException(0, buffer);
+		throw MYSQLException(0, buffer);
 
 		return szNullValue;
 	}
@@ -237,7 +237,7 @@ const char* MySQLQuery::getStringField(int nField, const char* szNullValue/*=""*
 	return _row[nField];
 }
 
-const char* MySQLQuery::getStringField(const char* szField, const char* szNullValue/*=""*/)
+const char* MYSQLQuery::getStringField(const char* szField, const char* szNullValue/*=""*/)
 {
 	if ( NULL == m_MysqlRes )
 	{
@@ -249,13 +249,13 @@ const char* MySQLQuery::getStringField(const char* szField, const char* szNullVa
 	{
 		char buffer[512] = { 0 };
 		sprintf(buffer, "can't find fieldName %s", szField);
-		throw MySQLException(0, buffer);
+		throw MYSQLException(0, buffer);
 	}
 
 	return getStringField(nField, szNullValue);
 }
 
-int64_t MySQLQuery::getInt64Field(int nField, int64_t nNullValue /*= 0*/)
+int64_t MYSQLQuery::getInt64Field(int nField, int64_t nNullValue /*= 0*/)
 {
 	if ( NULL == m_MysqlRes )
 	{
@@ -275,7 +275,7 @@ int64_t MySQLQuery::getInt64Field(int nField, int64_t nNullValue /*= 0*/)
 	return _atoi64(_row[nField]);
 }
 
-int64_t MySQLQuery::getInt64Field(const char* szField, int64_t nNullValue /*= 0*/)
+int64_t MYSQLQuery::getInt64Field(const char* szField, int64_t nNullValue /*= 0*/)
 {
 	if ( NULL == m_MysqlRes || NULL == szField )
 	{
@@ -296,7 +296,7 @@ int64_t MySQLQuery::getInt64Field(const char* szField, int64_t nNullValue /*= 0*
 	return _atoi64(filed);
 }
 
-double MySQLQuery::getFloatField(int nField, double fNullValue/*=0.0*/)
+double MYSQLQuery::getFloatField(int nField, double fNullValue/*=0.0*/)
 {
 	const char* field = getStringField(nField);
 	if ( NULL == field )
@@ -307,7 +307,7 @@ double MySQLQuery::getFloatField(int nField, double fNullValue/*=0.0*/)
 	return atof(field);
 }
 
-double MySQLQuery::getFloatField(const char* szField, double fNullValue/*=0.0*/)
+double MYSQLQuery::getFloatField(const char* szField, double fNullValue/*=0.0*/)
 {
 	const char* field = getStringField(szField);
 	if ( NULL == field )
@@ -318,7 +318,7 @@ double MySQLQuery::getFloatField(const char* szField, double fNullValue/*=0.0*/)
 	return atof(field);
 }
 
-void MySQLQuery::nextRow()
+void MYSQLQuery::nextRow()
 {
 	if ( NULL == m_MysqlRes )
 	{
@@ -328,7 +328,7 @@ void MySQLQuery::nextRow()
 	_row = mysql_fetch_row((MYSQL_RES*)m_MysqlRes);
 }
 
-const unsigned char* MySQLQuery::getBlobField(int nField, int& nLen)
+const unsigned char* MYSQLQuery::getBlobField(int nField, int& nLen)
 {
 	const unsigned char* pData = (const unsigned char*)getStringField(nField);
 	if (NULL == pData)
@@ -342,7 +342,7 @@ const unsigned char* MySQLQuery::getBlobField(int nField, int& nLen)
 	return pData;
 }
 
-const unsigned char* MySQLQuery::getBlobField(const char* szField, int& nLen)
+const unsigned char* MYSQLQuery::getBlobField(const char* szField, int& nLen)
 {
 	if (NULL == m_MysqlRes)
 	{
@@ -367,7 +367,7 @@ const unsigned char* MySQLQuery::getBlobField(const char* szField, int& nLen)
 	return pData;
 }
 
-bool MySQLQuery::fieldIsNull(int nField)
+bool MYSQLQuery::fieldIsNull(int nField)
 {
 	if (NULL == m_MysqlRes)
 	{
@@ -383,7 +383,7 @@ bool MySQLQuery::fieldIsNull(int nField)
 	return FALSE;
 }
 
-bool MySQLQuery::fieldIsNull(const char* szField)
+bool MYSQLQuery::fieldIsNull(const char* szField)
 {
 	if (NULL == m_MysqlRes)
 	{
@@ -399,18 +399,18 @@ bool MySQLQuery::fieldIsNull(const char* szField)
 	return FALSE;
 }
 
-bool MySQLQuery::eof()
+bool MYSQLQuery::eof()
 {
 	return (_row == NULL);
 }
 
-MySQLConnection::MySQLConnection()
+MYSQLConnection::MYSQLConnection()
 	:mysql_(NULL)
 {
 
 }
 
-MySQLConnection::~MySQLConnection()
+MYSQLConnection::~MYSQLConnection()
 {
 	if (mysql_ != NULL )
 	{
@@ -418,24 +418,24 @@ MySQLConnection::~MySQLConnection()
 	}
 }
 
-void MySQLConnection::open(const char* host, const char* user, const char* passwd, const char* db,
+void MYSQLConnection::open(const char* host, const char* user, const char* passwd, const char* db,
                        unsigned int port, const char* charSetName, unsigned long client_flag /*= 0*/)
 {
 	mysql_ = mysql_init(NULL);
 	if (NULL == mysql_)
 	{
-		throw MySQLException(0, "init mysql failed!");
+		throw MYSQLException(0, "init mysql failed!");
 	}
 
 	if (0 != mysql_options((MYSQL*)mysql_, MYSQL_SET_CHARSET_NAME, charSetName))
 	{
-		throw MySQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
+		throw MYSQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
 	}
 
 	//如果连接失败，返回NULL。对于成功的连接，返回值与第1个参数的值相同。
 	if ( NULL == mysql_real_connect((MYSQL*)mysql_, host, user, passwd, db, port, NULL, client_flag) )
 	{
-		throw MySQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
+		throw MYSQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
 	}
 
 	m_strHost		= host;
@@ -449,11 +449,11 @@ void MySQLConnection::open(const char* host, const char* user, const char* passw
 	//0表示成功，非0值表示出现错误。
 	if ( mysql_select_db((MYSQL*)mysql_, db ) != 0 )
 	{
-		throw MySQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
+		throw MYSQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
 	}
 }
 
-bool MySQLConnection::setOpenParam(const char* host, const char* user, const char* passwd, const char* db, unsigned int port, const char* charSetName /*= "utf8"*/, unsigned long client_flag /*= 0*/)
+bool MYSQLConnection::setOpenParam(const char* host, const char* user, const char* passwd, const char* db, unsigned int port, const char* charSetName /*= "utf8"*/, unsigned long client_flag /*= 0*/)
 {
 	m_strHost = host;
 	m_strUser = user;
@@ -464,7 +464,7 @@ bool MySQLConnection::setOpenParam(const char* host, const char* user, const cha
 	return true;
 }
 
-void MySQLConnection::close()
+void MYSQLConnection::close()
 {
 	if ( mysql_ != NULL )
 	{
@@ -474,7 +474,7 @@ void MySQLConnection::close()
 }
 
 /* 处理返回多行的查询，返回影响的行数 */
-MySQLQuery& MySQLConnection::querySQL(const char* sql)
+MYSQLQuery& MYSQLConnection::querySQL(const char* sql)
 {
 	do 
 	{
@@ -496,7 +496,7 @@ MySQLQuery& MySQLConnection::querySQL(const char* sql)
 				continue;
 			}
 
-			throw MySQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
+			throw MYSQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
 		}
 	
 		m_dbQuery.m_MysqlRes = mysql_store_result((MYSQL*)mysql_);
@@ -506,7 +506,7 @@ MySQLQuery& MySQLConnection::querySQL(const char* sql)
 }
 
 /* 执行非返回结果查询 */
-int MySQLConnection::execSQL(const char* sql)
+int MYSQLConnection::execSQL(const char* sql)
 {
 	do 
 	{ 
@@ -531,13 +531,13 @@ int MySQLConnection::execSQL(const char* sql)
 			continue;
 		}
 
-		throw MySQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
+		throw MYSQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));
 
 	} while (true);
 }
 
 /* 测试mysql服务器是否存活 */
-bool MySQLConnection::ping()
+bool MYSQLConnection::ping()
 {
 	if (mysql_ == nullptr)
 	{
@@ -553,7 +553,7 @@ bool MySQLConnection::ping()
 }
 
 /* 关闭mysql 服务器 */
-bool MySQLConnection::shutDown()
+bool MYSQLConnection::shutDown()
 {
 	if( mysql_shutdown((MYSQL*)mysql_, SHUTDOWN_DEFAULT) == 0 )
 	{
@@ -564,7 +564,7 @@ bool MySQLConnection::shutDown()
 }
 
 /* 主要功能:重新启动mysql 服务器 */
-bool MySQLConnection::reboot()
+bool MYSQLConnection::reboot()
 {
 	if(!mysql_reload((MYSQL*)mysql_))
 	{
@@ -574,7 +574,7 @@ bool MySQLConnection::reboot()
 	return false;
 }
 
-void MySQLConnection::reconnect()
+void MYSQLConnection::reconnect()
 {
 	close();
 
@@ -592,7 +592,7 @@ void MySQLConnection::reconnect()
 * 说明:事务支持InnoDB or BDB表类型
 */
 /* 主要功能:开始事务 */
-bool MySQLConnection::startTransaction()
+bool MYSQLConnection::startTransaction()
 {
 	if(!mysql_real_query((MYSQL*)mysql_, "START TRANSACTION", (unsigned long)strlen("START TRANSACTION") ))
 	{
@@ -603,7 +603,7 @@ bool MySQLConnection::startTransaction()
 }
 
 /* 主要功能:提交事务 */
-bool MySQLConnection::commit()
+bool MYSQLConnection::commit()
 {
 	if(!mysql_real_query((MYSQL*)mysql_, "COMMIT", (unsigned long)strlen("COMMIT") ) )
 	{
@@ -614,7 +614,7 @@ bool MySQLConnection::commit()
 }
 
 /* 主要功能:回滚事务 */
-bool MySQLConnection::rollback()
+bool MYSQLConnection::rollback()
 {
 	if(!mysql_real_query((MYSQL*)mysql_, "ROLLBACK", (unsigned long)strlen("ROLLBACK") ) )
 	{
@@ -625,48 +625,48 @@ bool MySQLConnection::rollback()
 }
 
 /* 得到客户信息 */
-const char* MySQLConnection::getClientInfo()
+const char* MYSQLConnection::getClientInfo()
 {
 	return mysql_get_client_info();
 }
 
 /* 主要功能:得到客户版本信息 */
-const unsigned long  MySQLConnection::getClientVersion()
+const unsigned long  MYSQLConnection::getClientVersion()
 {
 	return mysql_get_client_version();
 }
 
 /* 主要功能:得到主机信息 */
-const char* MySQLConnection::getHostInfo()
+const char* MYSQLConnection::getHostInfo()
 {
 	return mysql_get_host_info((MYSQL*)mysql_);
 }
 
 /* 主要功能:得到服务器信息 */
-const char* MySQLConnection::GetServerInfo()
+const char* MYSQLConnection::GetServerInfo()
 {
 	return mysql_get_server_info((MYSQL*)mysql_);
 }
 
-const char* MySQLConnection::GetErrorMsg()
+const char* MYSQLConnection::GetErrorMsg()
 {
 	return m_strError.c_str();
 }
 
 /*主要功能:得到服务器版本信息*/
-const unsigned long  MySQLConnection::GetDBVersion()
+const unsigned long  MYSQLConnection::GetDBVersion()
 {
 	return mysql_get_server_version((MYSQL*)mysql_);
 }
 
 /*主要功能:得到 当前连接的默认字符集*/
-const char*   MySQLConnection::getCharacterSetName()
+const char*   MYSQLConnection::getCharacterSetName()
 {
 	return mysql_character_set_name((MYSQL*)mysql_);
 }
 
 /* 建立新数据库 */
-int MySQLConnection::createDB(const char* name)
+int MYSQLConnection::createDB(const char* name)
 {
 	char temp[1024];
 	snprintf(temp, 1024, "CREATE DATABASE %s", name);
@@ -679,7 +679,7 @@ int MySQLConnection::createDB(const char* name)
 }
 
 /* 删除制定的数据库*/
-int MySQLConnection::dropDB(const char*  name)
+int MYSQLConnection::dropDB(const char*  name)
 {
 	char temp[1024];
 
@@ -692,7 +692,7 @@ int MySQLConnection::dropDB(const char*  name)
 	return -1;
 }
 
-bool MySQLConnection::changeCurDB(const char* name)
+bool MYSQLConnection::changeCurDB(const char* name)
 {
 	if (mysql_ == NULL)
 	{
@@ -707,7 +707,7 @@ bool MySQLConnection::changeCurDB(const char* name)
 	return false;
 }
 
-int64_t MySQLConnection::getAutoIncrementID(const char* szTableName, const char* szDBName)
+int64_t MYSQLConnection::getAutoIncrementID(const char* szTableName, const char* szDBName)
 {
 	if ((szTableName == NULL) || (szDBName == NULL))
 	{
@@ -727,7 +727,7 @@ int64_t MySQLConnection::getAutoIncrementID(const char* szTableName, const char*
 	}
 }
 
-bool MySQLConnection::setAutoIncrementID(int64_t nId, const char* szTableName, const char* szDBName)
+bool MYSQLConnection::setAutoIncrementID(int64_t nId, const char* szTableName, const char* szDBName)
 {
 	if ((szTableName == NULL) || (szDBName == NULL))
 	{
@@ -747,7 +747,7 @@ bool MySQLConnection::setAutoIncrementID(int64_t nId, const char* szTableName, c
 	}
 }
 
-MySQLQuery& MySQLConnection::nextRecordset()
+MYSQLQuery& MYSQLConnection::nextRecordset()
 {
 	if (mysql_ != nullptr)
 	{

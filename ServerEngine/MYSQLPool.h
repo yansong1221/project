@@ -4,7 +4,6 @@
 
 #include <list>
 #include <vector>
-#include "comutil.h"
 #include <memory>
 
 #include "CppMysql.h"
@@ -17,15 +16,15 @@ public:
 	~CMYSQLPool();
 
 	void Initialization(const char* szDBAddr, int wPort, const char* szDBName, const char* szUser, const char* szPassword);
-	MySQLConnection* CreateMYSQLConn();
+	MYSQLConnection* CreateMYSQLConn();
 
-	void RecoverMYSQLConn(MySQLConnection* pDataBaseHelper);
+	void RecoverMYSQLConn(MYSQLConnection* pDataBaseHelper);
 
 	static CMYSQLPool* GetInstance();
 
 	void UnInitialization();
 protected:
-	std::list<MySQLConnection*> m_FreeConns,m_UseConns;
+	std::list<MYSQLConnection*> m_FreeConns,m_UseConns;
 	SpinLock m_SpinLock;
 	static CMYSQLPool* m_pInstance;
 

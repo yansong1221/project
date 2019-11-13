@@ -23,19 +23,19 @@ void CMYSQLPool::Initialization(const char* szDBAddr, int wPort, const char* szD
 
 	std::unique_lock<SpinLock> ul(m_SpinLock);
 
-	for (int i = 0; i < std::thread::hardware_concurrency() * 2; ++i)
+	for (size_t i = 0; i < std::thread::hardware_concurrency() * 2; ++i)
 	{
-		MySQLConnection* pDataBaseHelper = new MySQLConnection;
+		MYSQLConnection* pDataBaseHelper = new MYSQLConnection;
 		pDataBaseHelper->open(m_szDBAddr.c_str(), m_szUser.c_str(), m_szPassword.c_str(), m_szDBName.c_str(), m_wPort);
 		m_FreeConns.push_back(pDataBaseHelper);
 	}
 }
 
-MySQLConnection* CMYSQLPool::CreateMYSQLConn()
+MYSQLConnection* CMYSQLPool::CreateMYSQLConn()
 {
 	std::unique_lock<SpinLock> ul(m_SpinLock);
 
-	MySQLConnection* pDataBaseHelper = NULL;
+	MYSQLConnection* pDataBaseHelper = NULL;
 
 	if (!m_FreeConns.empty())
 	{
@@ -46,7 +46,7 @@ MySQLConnection* CMYSQLPool::CreateMYSQLConn()
 		return pDataBaseHelper;
 	}
 
-	pDataBaseHelper = new MySQLConnection;
+	pDataBaseHelper = new MYSQLConnection;
 	pDataBaseHelper->open(m_szDBAddr.c_str(), m_szUser.c_str(), m_szPassword.c_str(), m_szDBName.c_str(), m_wPort);
 	m_UseConns.push_back(pDataBaseHelper);
 
@@ -54,7 +54,7 @@ MySQLConnection* CMYSQLPool::CreateMYSQLConn()
 }
 
 
-void CMYSQLPool::RecoverMYSQLConn(MySQLConnection* pDataBaseHelper)
+void CMYSQLPool::RecoverMYSQLConn(MYSQLConnection* pDataBaseHelper)
 {
 	std::unique_lock<SpinLock> ul(m_SpinLock);
 

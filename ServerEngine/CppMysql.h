@@ -6,10 +6,10 @@
 #include <exception>
 #include <string>
 
-class ENGINE_API MySQLException : public std::exception
+class ENGINE_API MYSQLException : public std::exception
 {
 public:
-	MySQLException(int num, const std::string& str);
+	MYSQLException(int num, const std::string& str);
 
 	int getErrorNum() const;
 	bool IsConnectError() const;
@@ -18,19 +18,19 @@ private:
 };
 
 
-class ENGINE_API MySQLQuery
+class ENGINE_API MYSQLQuery
 {
-	friend class MySQLConnection;
+	friend class MYSQLConnection;
 public:
-	MySQLQuery();
+	MYSQLQuery();
 
 	//当执行拷贝构造函数后，括号里的类已经无效，不能再使用
-	MySQLQuery(MySQLQuery& rQuery);
+	MYSQLQuery(MYSQLQuery& rQuery);
 
 	// 当执行赋值构造函数后， = 右边的类已经无效，不能再使用
-	MySQLQuery& operator=(MySQLQuery& rQuery);
+	MYSQLQuery& operator=(MYSQLQuery& rQuery);
 
-	virtual ~MySQLQuery();
+	virtual ~MYSQLQuery();
 
 	int numRow();
 
@@ -76,11 +76,11 @@ private:
 	int   _field_count;
 };
 
-class ENGINE_API MySQLConnection
+class ENGINE_API MYSQLConnection
 {
 public:
-	MySQLConnection();
-	virtual ~MySQLConnection();
+	MYSQLConnection();
+	virtual ~MYSQLConnection();
 
 	void open(const char* host, const char* user, const char* passwd, const char* db,
 	          unsigned int port, const char* charSetName = "utf8mb4", unsigned long client_flag = 0);
@@ -92,7 +92,7 @@ public:
 
 	/* 处理返回多行的查询，返回影响的行数 */
 	//返回引用是因为在CppMySQLQuery的赋值构造函数中要把成员变量_mysql_res置为空
-	MySQLQuery& querySQL(const char* sql);
+	MYSQLQuery& querySQL(const char* sql);
 
 	/* 执行非返回结果查询 */
 	int execSQL(const char* sql);
@@ -152,17 +152,17 @@ public:
 
 	bool  setAutoIncrementID(int64_t nId, const char* szTableName, const char* szDBName);
 
-	MySQLQuery& nextRecordset();
+	MYSQLQuery& nextRecordset();
 
 private:
-	MySQLConnection(const MySQLConnection& db);
-	MySQLConnection& operator=(const MySQLConnection& db);
+	MYSQLConnection(const MYSQLConnection& db);
+	MYSQLConnection& operator=(const MYSQLConnection& db);
 
 private:
 	/* msyql 连接句柄 */
 	void* mysql_;
 
-	MySQLQuery m_dbQuery;
+	MYSQLQuery m_dbQuery;
 
 	int          m_nErrno;
 	std::string  m_strError;
