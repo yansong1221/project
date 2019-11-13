@@ -1,6 +1,8 @@
 #pragma once
 #include "ServerEngine.h"
+
 #include <vector>
+#include "MemoryStream.h"
 
 class ENGINE_API ITCPEvent
 {
@@ -40,7 +42,7 @@ private:
 
     bool active_;
 
-	std::vector<char> readBuf_;
+	MemoryStream readBuf_;
 
 	void* client_;
 

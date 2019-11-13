@@ -5,6 +5,8 @@
 #include <functional>
 #include <vector>
 
+#include "MemoryStream.h"
+
 using ClientConnectHandle = std::function<void(bool)>;
 using ClientReadHandle = std::function<void(uint32_t, const void *, size_t)>;
 using ClientCloseHandle = std::function<void()>;
@@ -36,5 +38,5 @@ private:
 	ClientReadHandle readHandle_;
 	ClientCloseHandle closeHandle_;
 
-	std::vector<char> readBuf_;
+	MemoryStream readBuf_;
 };

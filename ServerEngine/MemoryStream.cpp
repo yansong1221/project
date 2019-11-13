@@ -3,7 +3,7 @@
 #include <cstring>
 #include <algorithm>
 
-CMemoryStream::CMemoryStream()
+MemoryStream::MemoryStream()
 	:writePos_(0),
 	readPos_(0),
 	startPos_(0)
@@ -11,7 +11,7 @@ CMemoryStream::CMemoryStream()
 
 }
 
-CMemoryStream::CMemoryStream(const void* src, size_t size)
+MemoryStream::MemoryStream(const void* src, size_t size)
 	:writePos_(0),
 	readPos_(0),
 	startPos_(0)
@@ -19,7 +19,7 @@ CMemoryStream::CMemoryStream(const void* src, size_t size)
 	appendBinary(src, size);
 }
 
-CMemoryStream::CMemoryStream(const std::string& data)
+MemoryStream::MemoryStream(const std::string& data)
 	:writePos_(0),
 	readPos_(0),
 	startPos_(0)
@@ -27,12 +27,12 @@ CMemoryStream::CMemoryStream(const std::string& data)
 	appendBinary(data.c_str(), data.length());
 }
 
-CMemoryStream::~CMemoryStream()
+MemoryStream::~MemoryStream()
 {
 
 }
 
-void CMemoryStream::clear(bool clearData)
+void MemoryStream::clear(bool clearData)
 {
 	startPos_ = readPos_ = writePos_ = 0;
 	if (clearData)
@@ -42,17 +42,17 @@ void CMemoryStream::clear(bool clearData)
 }
 
 
-bool CMemoryStream::empty() const
+bool MemoryStream::empty() const
 {
 	return  startPos_ == writePos_;
 }
 
-void CMemoryStream::resetReadPos()
+void MemoryStream::resetReadPos()
 {
 	readPos_ = startPos_;
 }
 
-std::string CMemoryStream::readBinary(size_t sz)
+std::string MemoryStream::readBinary(size_t sz)
 {
 	if (rPos() + sz > wPos())
 	{
@@ -68,7 +68,7 @@ std::string CMemoryStream::readBinary(size_t sz)
 	return out;
 }
 
-void CMemoryStream::readBinary(void* buffer, size_t sz, size_t bufferSize)
+void MemoryStream::readBinary(void* buffer, size_t sz, size_t bufferSize)
 {
 	if (rPos() + sz > wPos())
 	{
@@ -78,7 +78,7 @@ void CMemoryStream::readBinary(void* buffer, size_t sz, size_t bufferSize)
 	readPos_ += sz;
 }
 
-std::string CMemoryStream::readString()
+std::string MemoryStream::readString()
 {
 	int8_t c;
 	std::string out;
@@ -90,14 +90,14 @@ std::string CMemoryStream::readString()
 }
 
 
-std::string CMemoryStream::readAll()
+std::string MemoryStream::readAll()
 {
 	std::string out((char*)&data_[readPos_], writePos_);
 	readPos_ = writePos_;
 	return out;
 }
 
-void CMemoryStream::appendBinary(const void* src, size_t sz)
+void MemoryStream::appendBinary(const void* src, size_t sz)
 {
 	if (src && sz > 0)
 	{
@@ -113,42 +113,42 @@ void CMemoryStream::appendBinary(const void* src, size_t sz)
 }
 
 
-void CMemoryStream::appendString(const std::string& str)
+void MemoryStream::appendString(const std::string& str)
 {
 	appendBinary(str.c_str(), str.length() + 1);
 }
 
-const void* CMemoryStream::data() const
+const void* MemoryStream::data() const
 {
 	return &data_[startPos_];
 }
 
-size_t CMemoryStream::size() const
+size_t MemoryStream::size() const
 {
 	return wPos() - startPos_;	
 }
 
-size_t CMemoryStream::capacity() const
+size_t MemoryStream::capacity() const
 {
 	return data_.capacity();
 }
 
-size_t CMemoryStream::wPos() const
+size_t MemoryStream::wPos() const
 {
 	return writePos_;
 }
 
-size_t CMemoryStream::rPos() const
+size_t MemoryStream::rPos() const
 {
 	return readPos_;
 }
 
-size_t CMemoryStream::readSize() const
+size_t MemoryStream::readSize() const
 {
 	return readPos_ - startPos_;
 }
 
-void CMemoryStream::remove(size_t offset, size_t count)
+void MemoryStream::remove(size_t offset, size_t count)
 {
 	if (startPos_ + offset + count > wPos())
 	{
@@ -161,7 +161,7 @@ void CMemoryStream::remove(size_t offset, size_t count)
 	writePos_ -= count;
 }
 
-void CMemoryStream::removeFront(size_t count)
+void MemoryStream::removeFront(size_t count)
 {
 	if (startPos_ + count > wPos())
 	{

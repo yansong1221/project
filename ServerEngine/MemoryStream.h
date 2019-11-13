@@ -23,16 +23,16 @@ private:
 	std::string message_;
 };
 
-class ENGINE_API CMemoryStream {
+class ENGINE_API MemoryStream {
 public:
-	CMemoryStream();
-	CMemoryStream(const std::string& data);
-	CMemoryStream(const void* src, size_t size);
-	~CMemoryStream();
+	MemoryStream();
+	MemoryStream(const std::string& data);
+	MemoryStream(const void* src, size_t size);
+	~MemoryStream();
 
 	//反序列化
 	template <typename T>
-	CMemoryStream& operator >> (T& value)
+	MemoryStream& operator >> (T& value)
 	{
 		value = read<T>();
 		return *this;
@@ -58,7 +58,7 @@ public:
 	std::string readAll();
 
 	//序列化
-	template <typename T> CMemoryStream& operator << (const T& value)
+	template <typename T> MemoryStream& operator << (const T& value)
 	{
 		append(value);
 		return *this;

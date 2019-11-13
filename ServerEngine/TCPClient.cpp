@@ -108,10 +108,10 @@ void TCPClient::parseDsata()
 			sendData(ENGINE_PING_MSGID, nullptr, 0);
 		}
 		else
-		{
-			readHandle_(header.msgID, &readBuf_[sizeof(TCPHeader)], header.len);
+		{	
+			readHandle_(header.msgID, (char*)readBuf_.data() + sizeof(TCPHeader), header.len);
 		}
-		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(TCPHeader) + header.len);
+		readBuf_.removeFront(sizeof(TCPHeader) + header.len);
 	}
 }
 void TCPClient::recvData()
@@ -131,7 +131,7 @@ void TCPClient::recvData()
 		auto conn = (TCPClient *)client->data;
 		if (nread > 0)
 		{
-			std::copy(buf->base, buf->base + nread, std::back_inserter(conn->readBuf_));
+			conn->readBuf_.appendBinary(buf->base, nread);
 			//parse data
 			conn->parseDsata();
 			return;

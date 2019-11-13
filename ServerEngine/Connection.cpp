@@ -123,9 +123,10 @@ void Connection::parseDsata()
 
 		if (msgID != ENGINE_PING_MSGID)
 		{
-			TCPEvent_->onNewMessage(getSocketID(), msgID, &readBuf_[sizeof(TCPHeader)], len);
+			TCPEvent_->onNewMessage(getSocketID(), msgID, (char*)readBuf_.data() + sizeof(TCPHeader), len);
 		}
-		readBuf_.erase(readBuf_.begin(), readBuf_.begin() + sizeof(TCPHeader) + len);
+
+		readBuf_.removeFront(sizeof(TCPHeader) + len);
 	}
 }
 
@@ -146,7 +147,7 @@ void Connection::recvData()
 		auto conn = (Connection *)client->data;
 		if (nread > 0)
 		{
-			std::copy(buf->base, buf->base + nread, std::back_inserter(conn->readBuf_));
+			conn->readBuf_.appendBinary(buf->base, nread);
 			//parse data
 			conn->parseDsata();
 			return;
