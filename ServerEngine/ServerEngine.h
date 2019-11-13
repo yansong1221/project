@@ -5,7 +5,9 @@
 
 #ifdef _WIN32
 #pragma warning(disable:4251)
+#pragma warning(disable:4275)
 #pragma warning(disable:4099)
+
 #endif
 
 #pragma pack(1)
@@ -42,7 +44,7 @@ struct TCPHeader
 	#include "Timer.h"
 	#include "TCPClient.h"
 	#include "Logger.h"
-
+	#include "MYSQLPool.h"
 #endif
 
 

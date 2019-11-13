@@ -51,6 +51,15 @@
     <ClInclude Include="..\..\ServerEngine\Logger.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ServerEngine\CppMysql.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ServerEngine\MYSQLPool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ServerEngine\SpinLock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ServerEngine\Connection.cpp">
@@ -84,6 +93,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ServerEngine\Logger.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ServerEngine\CppMysql.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ServerEngine\MYSQLPool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
