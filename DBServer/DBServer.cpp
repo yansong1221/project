@@ -21,6 +21,10 @@ bool DBServer::OnStartUp()
 	Logger::getInstance().info("开始监听端口:%d", DEFAULT_LISTEN_PORT);
 	if(TCPServer_.listen(DEFAULT_LISTEN_PORT, 1024) == false) return false;
 
+	HttpClient client;
+	client.sendHttpRequest("GET", "https://www.baidu.com");
+
+	Logger::getInstance().info(client.GetBody().c_str());
 	//检查心跳
 	eventDispatcher_.addTimer(2000, [this](TimerWapper timer)
 	{

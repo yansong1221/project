@@ -126,43 +126,68 @@ void Logger::stopLogger()
 	workThread_.join();
 }
 
+std::string formatString(const char* format, va_list ap)
+{
+	std::string ret;
+
+	size_t	size = 512;
+	char*	buf = (char*)malloc(size);
+	int		len = 0;
+
+	do
+	{
+		va_list copy_ap;
+		va_copy(copy_ap, ap);
+		len = vsnprintf(buf, size - 1, format, copy_ap);
+		va_end(copy_ap);
+
+		if (len < 0 || len >= size)
+		{
+			size *= 2;
+			free(buf);
+			buf = (char*)malloc(size);
+			continue;
+
+		}else break;
+
+	} while (true);
+
+	ret = buf;
+	free(buf);
+
+	return ret;
+}
+
 void Logger::warning(const char* format, ...)
 {
 	if (runStatus_ == false) return;
 
-	char buf[512];
-	va_list argList;
-	va_start(argList, format);
-	vsnprintf(buf,sizeof(buf), format, argList);
-	va_end(argList);
-
-	pushLog(buf,LOGLEVEL_WARNING);
+	va_list ap;
+	va_start(ap, format);
+	pushLog(formatString(format, ap).c_str(), LOGLEVEL_WARNING);
+	va_end(ap);	
 }
 
 void Logger::error(const char* format, ...)
 {
 	if (runStatus_ == false) return;
 
-	char buf[512];
-	va_list argList;
-	va_start(argList, format);
-	vsnprintf(buf, sizeof(buf), format, argList);
-	va_end(argList);
+	va_list ap;
+	va_start(ap, format);
+	pushLog(formatString(format, ap).c_str(), LOGLEVEL_ERROR);
+	va_end(ap);
 
-	pushLog(buf, LOGLEVEL_ERROR);
 }
 
 void Logger::info(const char* format, ...)
 {
 	if (runStatus_ == false) return;
 
-	char buf[512];
-	va_list argList;
-	va_start(argList, format);
-	vsnprintf(buf, sizeof(buf), format, argList);
-	va_end(argList);
+	va_list ap;
+	va_start(ap, format);
+	pushLog(formatString(format, ap).c_str(), LOGLEVEL_INFO);
+	va_end(ap);
 
-	pushLog(buf, LOGLEVEL_INFO);
 }
 
 void Logger::threadFunc(std::promise<bool>& run)

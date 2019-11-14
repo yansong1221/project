@@ -17,10 +17,12 @@ bool LoginServer::OnStartUp()
 	Logger::getInstance().startLogger("./log/LoginServer/");
 
 	Logger::getInstance().info("连接数据库服务器");
+
 	DBClient_.setConnectHandle(std::bind(&LoginServer::OnDBConnect, this,std::placeholders::_1));
 	DBClient_.setReadHandle(std::bind(&LoginServer::OnDBMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 	DBClient_.setCloseHandle(std::bind(&LoginServer::OnDBDisconnect, this));
 	DBClient_.connect("127.0.0.1", 8100);
+
 	return true;
 }
 

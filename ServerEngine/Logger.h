@@ -26,8 +26,6 @@ public:
 		std::string		fileName;
 	};
 
-
-
 	Logger();
 	~Logger();
 
