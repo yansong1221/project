@@ -121,9 +121,15 @@
   <ItemGroup>
     <ClCompile Include="..\..\CenterServer\CenterServer.cpp" />
     <ClCompile Include="..\..\CenterServer\main.cpp" />
+    <ClCompile Include="..\..\CenterServer\ServerItem.cpp" />
+    <ClCompile Include="..\..\CenterServer\ServerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CenterServer\CenterServer.h" />
+    <ClInclude Include="..\..\CenterServer\ServerItem.h" />
+    <ClInclude Include="..\..\CenterServer\ServerManager.h" />
+    <ClInclude Include="..\..\Common\Define.h" />
+    <ClInclude Include="..\..\Common\InternalMsg.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ServerEngine\ServerEngine.vcxproj">

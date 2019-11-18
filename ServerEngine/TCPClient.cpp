@@ -148,6 +148,7 @@ void TCPClient::recvData()
 }
 void TCPClient::close()
 {
+	uv_read_stop((uv_stream_t*)client_);
 	uv_close((uv_handle_t *)client_, [](uv_handle_t* handle)
 	{
 		((TCPClient*)handle->data)->closeHandle_();

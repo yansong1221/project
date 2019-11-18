@@ -23,6 +23,9 @@ protected:
 	virtual void onCloseConnect(uint32_t socketID) override;
 
 private:
+	//×¢²á·þÎñÆ÷
+	void OnRegisterServer(uint32_t socketID,const rapidjson::Document& Doc);
+private:
 	void addReceiveCallBack(uint32_t msgID, ReceiveHandle handle);
 public:
 	int run();
