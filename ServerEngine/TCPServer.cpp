@@ -83,7 +83,7 @@ void TCPServer::close()
 	server_ = nullptr;
 }
 
-void TCPServer::sendData(uint32_t socketID, uint32_t msgID, const void* data, size_t sz)
+void TCPServer::sendData(uint64_t socketID, uint32_t msgID, const void* data, size_t sz)
 {
 	if (server_ == nullptr) return;
 
@@ -100,7 +100,7 @@ void TCPServer::sendData(uint32_t socketID, uint32_t msgID, const void* data, si
 }
 
 
-void TCPServer::closeSocket(uint32_t socketID)
+void TCPServer::closeSocket(uint64_t socketID)
 {
 	if (server_ == nullptr) return;
 

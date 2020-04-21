@@ -16,9 +16,9 @@ public:
     bool listen(int port, int backlog);
     void close();
 
-	void sendData(uint32_t socketID, uint32_t msgID, const void* p, size_t n);
+	void sendData(uint64_t socketID, uint32_t msgID, const void* p, size_t n);
 
-	void closeSocket(uint32_t socketID);
+	void closeSocket(uint64_t socketID);
 
 	void checkConnection();
 private:

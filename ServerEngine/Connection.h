@@ -7,9 +7,9 @@
 class ENGINE_API ITCPEvent
 {
 public:
-    virtual void onNewConnect(uint32_t socketID) = 0;
-    virtual void onNewMessage(uint32_t socketID,uint32_t msgID, const void *data, size_t sz) = 0;
-    virtual void onCloseConnect(uint32_t socketID) = 0;
+    virtual void onNewConnect(uint64_t socketID) = 0;
+    virtual void onNewMessage(uint64_t socketID,uint32_t msgID, const void *data, size_t sz) = 0;
+    virtual void onCloseConnect(uint64_t socketID) = 0;
 };
 
 class ENGINE_API Connection
@@ -17,11 +17,11 @@ class ENGINE_API Connection
 private:
     /* data */
 public:
-    Connection(uint16_t bindIndex, ITCPEvent* handle);
+    Connection(uint32_t bindIndex, ITCPEvent* handle);
     ~Connection();
 
 public:
-    uint32_t getSocketID() const;
+	uint64_t getSocketID() const;
 
     bool active() const;
 
@@ -29,7 +29,7 @@ public:
 
     void close();
 
-	uint16_t getRoundIndex() const;
+	uint32_t getRoundIndex() const;
 
 	void attach(void* client);
 	void check();
@@ -37,16 +37,14 @@ private:
 	void parseDsata();
 	void recvData();
 private:
-    uint16_t roundIndex_;
-    uint16_t bindIndex_;
+    uint32_t roundIndex_;
+    uint32_t bindIndex_;
 
     bool active_;
 
 	MemoryStream readBuf_;
 
 	void* client_;
-
 	ITCPEvent* TCPEvent_;
-
 	int connStatus_;
 };

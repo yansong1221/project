@@ -17,7 +17,7 @@ typedef struct
 	uv_buf_t buf;
 } write_req_t;
 
-Connection::Connection(uint16_t bindIndex, ITCPEvent* handle)
+Connection::Connection(uint32_t bindIndex, ITCPEvent* handle)
 	: bindIndex_(bindIndex),
 	active_(false),
 	client_(nullptr),
@@ -29,9 +29,9 @@ Connection::Connection(uint16_t bindIndex, ITCPEvent* handle)
 Connection::~Connection()
 {
 }
-uint32_t Connection::getSocketID() const
+uint64_t Connection::getSocketID() const
 {
-	return ((uint32_t)bindIndex_ << 16) | roundIndex_;
+	return ((uint64_t)bindIndex_ << 32) | roundIndex_;
 }
 bool Connection::active() const
 {
@@ -63,7 +63,7 @@ void Connection::close()
 }
 
 
-uint16_t Connection::getRoundIndex() const
+uint32_t Connection::getRoundIndex() const
 {
 	return roundIndex_;
 }

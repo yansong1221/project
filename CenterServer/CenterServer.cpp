@@ -37,12 +37,12 @@ bool CenterServer::OnShutDown()
 	return true;
 }
 
-void CenterServer::onNewConnect(uint32_t socketID)
+void CenterServer::onNewConnect(uint64_t socketID)
 {
 	ServerManager::getInstance()->createServer(socketID);
 }
 
-void CenterServer::onNewMessage(uint32_t socketID, uint32_t msgID, const void *data, size_t sz)
+void CenterServer::onNewMessage(uint64_t socketID, uint32_t msgID, const void *data, size_t sz)
 {
 	auto iter = callBacks_.find(msgID);
 	if(iter == callBacks_.end())
@@ -51,22 +51,28 @@ void CenterServer::onNewMessage(uint32_t socketID, uint32_t msgID, const void *d
 		return;
 	}
 
-	rapidjson::Document Doc;
-	Doc.Parse((const char*)data, sz);
-	if (Doc.HasParseError()) return;
-
-	for (const auto& v : iter->second)
+	try
 	{
-		v(socketID, Doc);
+		std::string str((const char*)data, sz);
+		auto doc = nlohmann::json::parse(str);
+
+		for (const auto& handle : iter->second)
+		{
+			handle(socketID, doc);
+		}
+	}
+	catch (const std::exception&)
+	{
+		return;
 	}
 }
 
-void CenterServer::onCloseConnect(uint32_t socketID)
+void CenterServer::onCloseConnect(uint64_t socketID)
 {
 	ServerManager::getInstance()->discardServer(socketID);
 }
 
-void CenterServer::OnRegisterServer(uint32_t socketID, const rapidjson::Document& Doc)
+void CenterServer::OnRegisterServer(uint64_t socketID, const nlohmann::json& Doc)
 {
 	auto serverItem = ServerManager::getInstance()->serachServer(socketID);
 	if (serverItem == nullptr)
@@ -75,11 +81,13 @@ void CenterServer::OnRegisterServer(uint32_t socketID, const rapidjson::Document
 		return;
 	}
 
-	InternalServerRegister ServerRegister;
-	ServerRegister.fromJson(Doc);
-	serverItem->setServerInfo(ServerRegister.ip, ServerRegister.port, (ServerType)ServerRegister.serverType);
+	std::string ip = Doc["ip"];
+	int port = Doc["port"];
+	int serverType = Doc["serverType"];
 
-	Logger::getInstance().info("服务器注册成功->serverType:%d", ServerRegister.serverType);
+	serverItem->setServerInfo(ip, port, (ServerType)serverType);
+
+	Logger::getInstance().info("服务器注册成功->serverType:%d", serverType);
 }
 
 void CenterServer::addReceiveCallBack(uint32_t msgID, ReceiveHandle handle)
