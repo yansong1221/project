@@ -9,6 +9,6 @@
 
 
 //内部消息
-static const uint32_t INTERNAL_MESSAGE_START = 1;
+static const uint32_t INTERNAL_MESSAGE_START = 10;
 
 

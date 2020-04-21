@@ -19,38 +19,35 @@ ServerManager* ServerManager::getInstance()
 	return instance_;
 }
 
-ServerItem* ServerManager::createServer(uint64_t socketID)
+std::weak_ptr<ServerItem> ServerManager::createServer(uint64_t socketID)
 {
-	auto item = new ServerItem(socketID);
+	auto item = std::make_shared<ServerItem>(socketID);
 	servers_.push_back(item);
-	return item;
+	return std::weak_ptr<ServerItem>(item);
 }
 
 void ServerManager::discardServer(uint64_t socketID)
 {
-	auto iter = std::find_if(servers_.begin(), servers_.end(), [&](ServerItem* p)
+	auto iter = std::find_if(servers_.begin(), servers_.end(), [&](const auto& item)
 	{
-		return p->getSocketID() == socketID;
+		return item->getSocketID() == socketID;
 	});
 	if (iter == servers_.end()) return;
-
-	delete (*iter);
 	servers_.erase(iter);
 }
 
-ServerItem* ServerManager::serachServer(uint64_t socketID)
+std::weak_ptr<ServerItem> ServerManager::serachServer(uint64_t socketID)
 {
-	auto iter = std::find_if(servers_.begin(), servers_.end(), [&](ServerItem* p)
+	auto iter = std::find_if(servers_.begin(), servers_.end(), [&](const auto& item)
 	{
-		return p->getSocketID() == socketID;
+		return item->getSocketID() == socketID;
 	});
 
-	if (iter == servers_.end()) return nullptr;
+	if (iter == servers_.end()) return std::weak_ptr<ServerItem>();
 	return *iter;
 }
 
 void ServerManager::clear()
 {
-	for (const auto& v : servers_) delete v;
 	servers_.clear();
 }

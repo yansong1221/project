@@ -24,27 +24,14 @@ HttpClient::~HttpClient()
 {
 }
 
-bool HttpClient::sendHttpRequest(const std::string& method, 
-	const std::string& url, 
-	const std::string& uri,
-	const std::string& query, 
-	const std::string& body)
+bool HttpClient::sendHttpRequest(const std::string& method, const std::string& url, const std::string& body)
 {
 	m_Headers.clear();
 	m_Body.clear();
 
 	CURL* pCurl = curl_easy_init();
 
-	std::string FullUrl;
-	FullUrl = url + uri;
-	
-	if (!query.empty())
-	{
-		FullUrl += "?";
-		FullUrl += query;
-	}
-
-	curl_easy_setopt(pCurl, CURLOPT_URL, FullUrl.c_str());
+	curl_easy_setopt(pCurl, CURLOPT_URL, url.c_str());
 
 	curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, write_data);
 	curl_easy_setopt(pCurl, CURLOPT_WRITEDATA, &m_Body);

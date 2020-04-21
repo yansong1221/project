@@ -9,7 +9,7 @@ enum ServerType
 	SERVER_TYPE_GATE,
 };
 
-class ServerItem
+class ServerItem : public std::enable_shared_from_this<ServerItem>
 {
 public:
 	ServerItem(uint64_t socketID);

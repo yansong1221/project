@@ -1,9 +1,12 @@
 #pragma once
 
 #include "ServerEngine/ServerEngine.h"
+#include "Common/Message.h"
+
 #include "nlohmann_json.hpp"
 #include <map>
 #include <list>
+
 
 using ReceiveHandle = std::function<void(uint64_t,const nlohmann::json&)>;
 
@@ -24,9 +27,7 @@ protected:
 
 private:
 	//×¢²á·þÎñÆ÷
-	void OnRegisterServer(uint64_t socketID, const nlohmann::json& Doc);
-private:
-	void addReceiveCallBack(uint32_t msgID, ReceiveHandle handle);
+	void OnRegisterServer(uint64_t socketID, const nlohmann::json& msg);
 public:
 	int run();
 
@@ -34,5 +35,5 @@ private:
 	EventDispatcher eventDispatcher_;
 	TCPServer		TCPServer_;
 
-	std::map<uint32_t, std::list<ReceiveHandle>> callBacks_;
+	MessageManager<ReceiveHandle> messageMgr_;
 };

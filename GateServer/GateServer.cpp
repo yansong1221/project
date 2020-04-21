@@ -29,17 +29,17 @@ bool GateServer::OnShutDown()
 	return true;
 }
 
-void GateServer::onNewConnect(uint32_t socketID)
+void GateServer::onNewConnect(uint64_t socketID)
 {
 
 }
 
-void GateServer::onNewMessage(uint32_t socketID, uint32_t msgID, const void *data, size_t sz)
+void GateServer::onNewMessage(uint64_t socketID, uint32_t msgID, const void *data, size_t sz)
 {
 
 }
 
-void GateServer::onCloseConnect(uint32_t socketID)
+void GateServer::onCloseConnect(uint64_t socketID)
 {
 
 }

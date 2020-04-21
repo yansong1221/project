@@ -42,17 +42,17 @@ bool DBServer::OnShutDown()
 	return true;
 }
 
-void DBServer::onNewConnect(uint32_t socketID)
+void DBServer::onNewConnect(uint64_t socketID)
 {
 	Logger::getInstance().info("用户连接:%d", socketID);
 }
 
-void DBServer::onNewMessage(uint32_t socketID, uint32_t msgID, const void *data, size_t sz)
+void DBServer::onNewMessage(uint64_t socketID, uint32_t msgID, const void *data, size_t sz)
 {
 	Logger::getInstance().info("用户消息:socketID:%d, msgID:%d,size:%d", socketID, msgID,sz);
 }
 
-void DBServer::onCloseConnect(uint32_t socketID)
+void DBServer::onCloseConnect(uint64_t socketID)
 {
 	Logger::getInstance().info("用户断开连接:%d", socketID);
 }
