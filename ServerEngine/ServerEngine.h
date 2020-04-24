@@ -45,6 +45,7 @@ struct TCPHeader
 	#include "TCPClient.h"
 	#include "Logger.h"
 	#include "MYSQLPool.h"
+	#include "nlohmann_json.hpp"
 #endif
 
 

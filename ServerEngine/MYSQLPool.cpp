@@ -1,7 +1,8 @@
 
 #include "MYSQLPool.h"
 #include <mutex>
-
+#include <thread>
+#include <algorithm>
 
 CMYSQLPool* CMYSQLPool::m_pInstance = new CMYSQLPool;
 

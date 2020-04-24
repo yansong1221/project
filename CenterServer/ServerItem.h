@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-
+#include <memory>
 enum ServerType
 {
 	SERVER_TYPE_NONE,

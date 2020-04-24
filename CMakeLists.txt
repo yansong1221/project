@@ -1,12 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
-add_definitions("-Wall -g")
-
-include_directories("./ServerEngine")
 add_subdirectory(./ServerEngine ServerEngine)
-link_directories(ServerEngine "/usr/local/lib")
-
-add_executable(main main.cpp)
-target_link_libraries(main ServerEngine uv)
+add_subdirectory(./DBServer DBServer)
+add_subdirectory(./CenterServer CenterServer)

@@ -23,7 +23,14 @@ HttpClient::HttpClient()
 HttpClient::~HttpClient()
 {
 }
-
+bool HttpClient::get(const std::string& url)
+{
+	return sendHttpRequest("GET",url);
+}
+bool HttpClient::post(const std::string& url,const std::string& body)
+{
+	return sendHttpRequest("POST",url);
+}
 bool HttpClient::sendHttpRequest(const std::string& method, const std::string& url, const std::string& body)
 {
 	m_Headers.clear();

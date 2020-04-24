@@ -22,9 +22,9 @@ bool DBServer::OnStartUp()
 	if(TCPServer_.listen(DEFAULT_LISTEN_PORT, 1024) == false) return false;
 
 	HttpClient client;
-	client.sendHttpRequest("GET", "https://www.baidu.com");
+	client.get("https://www.baidu.com");
 
-	Logger::getInstance().info(client.GetBody().c_str());
+	//Logger::getInstance().info(client.GetBody().c_str());
 	//检查心跳
 	eventDispatcher_.addTimer(2000, [this](TimerWapper timer)
 	{

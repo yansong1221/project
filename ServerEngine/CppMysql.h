@@ -13,8 +13,11 @@ public:
 
 	int getErrorNum() const;
 	bool IsConnectError() const;
+
+	virtual const char* what() const noexcept;
 private:
 	int errorNum_;
+	std::string str_;
 };
 
 

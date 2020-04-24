@@ -1,0 +1,6 @@
+/home/yan/code/project/DBServer/build/CMakeFiles/rebuild_cache.dir
+/home/yan/code/project/DBServer/build/CMakeFiles/DBServer.dir
+/home/yan/code/project/DBServer/build/CMakeFiles/edit_cache.dir
+/home/yan/code/project/DBServer/build/ServerEngine/CMakeFiles/rebuild_cache.dir
+/home/yan/code/project/DBServer/build/ServerEngine/CMakeFiles/ServerEngine.dir
+/home/yan/code/project/DBServer/build/ServerEngine/CMakeFiles/edit_cache.dir

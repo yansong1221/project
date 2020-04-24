@@ -1,14 +1,13 @@
 #pragma once
 
 #include <string>
-#include "nlohmann_json.hpp"
 
 #define	DEFAULT_BACKLOG_MAX					1024
-//中心服务器端口
+//锟斤拷锟侥凤拷锟斤拷锟斤拷锟剿匡拷
 #define DEFAULT_CENTER_PORT					8100
 
 
-//内部消息
+//锟节诧拷锟斤拷息
 static const uint32_t INTERNAL_MESSAGE_START = 10;
 
 

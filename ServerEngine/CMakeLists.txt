@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
-
-add_definitions("-Wall -g")
+set(CMAKE_CXX_STANDARD 17)
+#add_definitions("-Wall -g")
 add_definitions(-D BUILD_ENGINE_DLL)
 
-include_directories("/usr/local/include")
+#include_directories("/usr/local/include")
 
 aux_source_directory(./ SRC)
 ADD_LIBRARY(ServerEngine SHARED ${SRC})

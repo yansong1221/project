@@ -1,0 +1,97 @@
+[
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/Connection.cpp.o -c /home/yan/code/project/ServerEngine/Connection.cpp",
+  "file": "/home/yan/code/project/ServerEngine/Connection.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/CppMysql.cpp.o -c /home/yan/code/project/ServerEngine/CppMysql.cpp",
+  "file": "/home/yan/code/project/ServerEngine/CppMysql.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/EventDispatcher.cpp.o -c /home/yan/code/project/ServerEngine/EventDispatcher.cpp",
+  "file": "/home/yan/code/project/ServerEngine/EventDispatcher.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/HttpClient.cpp.o -c /home/yan/code/project/ServerEngine/HttpClient.cpp",
+  "file": "/home/yan/code/project/ServerEngine/HttpClient.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/Logger.cpp.o -c /home/yan/code/project/ServerEngine/Logger.cpp",
+  "file": "/home/yan/code/project/ServerEngine/Logger.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/MYSQLPool.cpp.o -c /home/yan/code/project/ServerEngine/MYSQLPool.cpp",
+  "file": "/home/yan/code/project/ServerEngine/MYSQLPool.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/MemoryStream.cpp.o -c /home/yan/code/project/ServerEngine/MemoryStream.cpp",
+  "file": "/home/yan/code/project/ServerEngine/MemoryStream.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/PacketHelper.cpp.o -c /home/yan/code/project/ServerEngine/PacketHelper.cpp",
+  "file": "/home/yan/code/project/ServerEngine/PacketHelper.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/Signal.cpp.o -c /home/yan/code/project/ServerEngine/Signal.cpp",
+  "file": "/home/yan/code/project/ServerEngine/Signal.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/TCPClient.cpp.o -c /home/yan/code/project/ServerEngine/TCPClient.cpp",
+  "file": "/home/yan/code/project/ServerEngine/TCPClient.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/TCPServer.cpp.o -c /home/yan/code/project/ServerEngine/TCPServer.cpp",
+  "file": "/home/yan/code/project/ServerEngine/TCPServer.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/ThreadPool.cpp.o -c /home/yan/code/project/ServerEngine/ThreadPool.cpp",
+  "file": "/home/yan/code/project/ServerEngine/ThreadPool.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/ServerEngine",
+  "command": "/usr/bin/g++-7  -DServerEngine_EXPORTS  -g -fPIC   -D BUILD_ENGINE_DLL -std=gnu++1z -o CMakeFiles/ServerEngine.dir/Timer.cpp.o -c /home/yan/code/project/ServerEngine/Timer.cpp",
+  "file": "/home/yan/code/project/ServerEngine/Timer.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/DBServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/DBServer/..  -g   -std=gnu++1z -o CMakeFiles/DBServer.dir/DBServer.cpp.o -c /home/yan/code/project/DBServer/DBServer.cpp",
+  "file": "/home/yan/code/project/DBServer/DBServer.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/DBServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/DBServer/..  -g   -std=gnu++1z -o CMakeFiles/DBServer.dir/main.cpp.o -c /home/yan/code/project/DBServer/main.cpp",
+  "file": "/home/yan/code/project/DBServer/main.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/CenterServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/CenterServer/..  -g   -std=gnu++1z -o CMakeFiles/CenterServer.dir/CenterServer.cpp.o -c /home/yan/code/project/CenterServer/CenterServer.cpp",
+  "file": "/home/yan/code/project/CenterServer/CenterServer.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/CenterServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/CenterServer/..  -g   -std=gnu++1z -o CMakeFiles/CenterServer.dir/ServerItem.cpp.o -c /home/yan/code/project/CenterServer/ServerItem.cpp",
+  "file": "/home/yan/code/project/CenterServer/ServerItem.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/CenterServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/CenterServer/..  -g   -std=gnu++1z -o CMakeFiles/CenterServer.dir/ServerManager.cpp.o -c /home/yan/code/project/CenterServer/ServerManager.cpp",
+  "file": "/home/yan/code/project/CenterServer/ServerManager.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/CenterServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/CenterServer/..  -g   -std=gnu++1z -o CMakeFiles/CenterServer.dir/main.cpp.o -c /home/yan/code/project/CenterServer/main.cpp",
+  "file": "/home/yan/code/project/CenterServer/main.cpp"
+}
+]

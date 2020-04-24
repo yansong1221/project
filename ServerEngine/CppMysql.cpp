@@ -7,7 +7,7 @@
 
 MYSQLException::MYSQLException(int num, const std::string& str)
 	:errorNum_(num),
-	std::exception(str.c_str())
+	str_(str)
 {
 
 }
@@ -26,6 +26,10 @@ bool MYSQLException::IsConnectError() const
 	}
 
 	return false;
+}
+const char* MYSQLException::what() const noexcept
+{
+	return str_.c_str();
 }
 
 MYSQLQuery::MYSQLQuery()
@@ -272,7 +276,7 @@ int64_t MYSQLQuery::getInt64Field(int nField, int64_t nNullValue /*= 0*/)
 		return nNullValue;
 	}
 
-	return _atoi64(_row[nField]);
+	return atoll(_row[nField]);
 }
 
 int64_t MYSQLQuery::getInt64Field(const char* szField, int64_t nNullValue /*= 0*/)
@@ -293,7 +297,7 @@ int64_t MYSQLQuery::getInt64Field(const char* szField, int64_t nNullValue /*= 0*
 		return nNullValue;
 	}
 
-	return _atoi64(filed);
+	return atoll(filed);
 }
 
 double MYSQLQuery::getFloatField(int nField, double fNullValue/*=0.0*/)
@@ -377,10 +381,10 @@ bool MYSQLQuery::fieldIsNull(int nField)
 	const unsigned char* pData = (const unsigned char*)getStringField(nField);
 	if (NULL == pData)
 	{
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 bool MYSQLQuery::fieldIsNull(const char* szField)
@@ -393,10 +397,10 @@ bool MYSQLQuery::fieldIsNull(const char* szField)
 	const unsigned char* pData = (const unsigned char*)getStringField(szField);
 	if (NULL == pData)
 	{
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 bool MYSQLQuery::eof()

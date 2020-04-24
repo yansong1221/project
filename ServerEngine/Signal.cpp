@@ -45,7 +45,7 @@ void Signal::remove(int signum)
 	auto iter = std::find_if(sigs_.begin(), sigs_.end(), [&](void* p)
 	{
 		uv_signal_req* req = (uv_signal_req*)p;
-		return req->signum = signum;
+		return req->signum == signum;
 	});
 
 	if (iter == sigs_.end()) return;

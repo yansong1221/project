@@ -3,7 +3,6 @@
 #include "ServerEngine/ServerEngine.h"
 #include "Common/Message.h"
 
-#include "nlohmann_json.hpp"
 #include <map>
 #include <list>
 
@@ -26,7 +25,7 @@ protected:
 	virtual void onCloseConnect(uint64_t socketID) override;
 
 private:
-	//×¢²á·þÎñÆ÷
+	//×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnRegisterServer(uint64_t socketID, const nlohmann::json& msg);
 public:
 	int run();

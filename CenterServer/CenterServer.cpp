@@ -18,8 +18,8 @@ CenterServer::~CenterServer()
 bool CenterServer::OnStartUp()
 {
 	Logger::getInstance().startLogger("./log/CenterServer/");
-	Logger::getInstance().info("³õÊ¼»¯·şÎñÆ÷");
-	Logger::getInstance().info("¿ªÊ¼¼àÌı¶Ë¿Ú:%d", DEFAULT_CENTER_PORT);
+	Logger::getInstance().info("åˆå§‹åŒ–æœåŠ¡å™¨");
+	Logger::getInstance().info("å¼€å§‹ç›‘å¬ç«¯å£:%d", DEFAULT_CENTER_PORT);
 	if (TCPServer_.listen(DEFAULT_CENTER_PORT, DEFAULT_BACKLOG_MAX) == false) return false;
 
 
@@ -49,7 +49,7 @@ void CenterServer::onNewMessage(uint64_t socketID, uint32_t msgID, const void *d
 		auto doc = nlohmann::json::parse(str);
 		if (messageMgr_.Invoke(msgID,socketID, doc) == false)
 		{
-			fprintf(stderr, "Î´×¢²áµÄÏûÏ¢->msgID:%d", msgID);
+			fprintf(stderr, "æœªæ³¨å†Œçš„æ¶ˆæ¯->msgID:%d", msgID);
 			return;
 		}
 	}
@@ -69,7 +69,7 @@ void CenterServer::OnRegisterServer(uint64_t socketID, const nlohmann::json& msg
 	auto serverItem = ServerManager::getInstance()->serachServer(socketID).lock();
 	if (serverItem == nullptr)
 	{
-		Logger::getInstance().warning("·şÎñÆ÷×¢²á´íÎó");
+		Logger::getInstance().warning("æœåŠ¡å™¨æ³¨å†Œé”™è¯¯");
 		return;
 	}
 
@@ -79,7 +79,7 @@ void CenterServer::OnRegisterServer(uint64_t socketID, const nlohmann::json& msg
 
 	serverItem->setServerInfo(ip, port, (ServerType)serverType);
 
-	Logger::getInstance().info("·şÎñÆ÷×¢²á³É¹¦->serverType:%d", serverType);
+	Logger::getInstance().info("æœåŠ¡å™¨æ³¨å†ŒæˆåŠŸ->serverType:%d", serverType);
 }
 
 int CenterServer::run()

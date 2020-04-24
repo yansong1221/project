@@ -1,0 +1,1 @@
+/usr/bin/g++-7  -g  -rdynamic CMakeFiles/CenterServer.dir/CenterServer.cpp.o CMakeFiles/CenterServer.dir/ServerItem.cpp.o CMakeFiles/CenterServer.dir/ServerManager.cpp.o CMakeFiles/CenterServer.dir/main.cpp.o  -o ../../bin/CenterServer -Wl,-rpath,/home/yan/code/project/build/ServerEngine ../ServerEngine/libServerEngine.so -lcurl-d -luv -lmysqlclient 
