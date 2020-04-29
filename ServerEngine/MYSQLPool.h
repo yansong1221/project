@@ -2,7 +2,6 @@
 
 #include "ServerEngine.h"
 
-#include <list>
 #include <vector>
 #include <memory>
 
@@ -16,15 +15,13 @@ public:
 	~CMYSQLPool();
 
 	void Initialization(const char* szDBAddr, int wPort, const char* szDBName, const char* szUser, const char* szPassword);
-	MYSQLConnection* CreateMYSQLConn();
-
-	void RecoverMYSQLConn(MYSQLConnection* pDataBaseHelper);
+	std::shared_ptr<MYSQLConnection> CreateMYSQLConn();
 
 	static CMYSQLPool* GetInstance();
 
 	void UnInitialization();
 protected:
-	std::list<MYSQLConnection*> m_FreeConns,m_UseConns;
+	std::vector<std::shared_ptr<MYSQLConnection>> m_Conns;
 	SpinLock m_SpinLock;
 	static CMYSQLPool* m_pInstance;
 

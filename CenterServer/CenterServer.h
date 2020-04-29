@@ -7,7 +7,7 @@
 #include <list>
 
 
-using ReceiveHandle = std::function<void(uint64_t,const nlohmann::json&)>;
+using ReceiveHandle = std::function<void(uint32_t,const nlohmann::json&)>;
 
 class CenterServer : public IEventDispatcher, public ITCPEvent
 {
@@ -20,13 +20,13 @@ protected:
 	virtual bool OnShutDown() override;
 
 
-	virtual void onNewConnect(uint64_t socketID) override;
-	virtual void onNewMessage(uint64_t socketID, uint32_t msgID, const void *data, size_t sz) override;
-	virtual void onCloseConnect(uint64_t socketID) override;
+	virtual void onNewConnect(uint32_t socketID) override;
+	virtual void onNewMessage(uint32_t socketID, uint32_t msgID, const void *data, size_t sz) override;
+	virtual void onCloseConnect(uint32_t socketID) override;
 
 private:
-	//ע�������
-	void OnRegisterServer(uint64_t socketID, const nlohmann::json& msg);
+	//注册服务器
+	void OnRegisterServer(uint32_t socketID, const nlohmann::json& msg);
 public:
 	int run();
 

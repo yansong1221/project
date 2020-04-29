@@ -42,6 +42,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/yan/code/project/build/ServerEngine/cmake_install.cmake")
   include("/home/yan/code/project/build/DBServer/cmake_install.cmake")
   include("/home/yan/code/project/build/CenterServer/cmake_install.cmake")
+  include("/home/yan/code/project/build/LoginServer/cmake_install.cmake")
 
 endif()
 

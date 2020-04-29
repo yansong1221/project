@@ -71,8 +71,6 @@ future
 ../CenterServer/../ServerEngine/MYSQLPool.h
 ServerEngine.h
 ../CenterServer/../ServerEngine/ServerEngine.h
-list
--
 vector
 -
 memory
@@ -147,12 +145,16 @@ vector
 -
 MemoryStream.h
 ../CenterServer/../ServerEngine/MemoryStream.h
+nlohmann_json.hpp
+../CenterServer/../ServerEngine/nlohmann_json.hpp
 
 ../CenterServer/../ServerEngine/TCPServer.h
 ServerEngine.h
 ../CenterServer/../ServerEngine/ServerEngine.h
 Connection.h
 ../CenterServer/../ServerEngine/Connection.h
+nlohmann_json.hpp
+../CenterServer/../ServerEngine/nlohmann_json.hpp
 
 ../CenterServer/../ServerEngine/ThreadPool.h
 ServerEngine.h

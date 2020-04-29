@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "MemoryStream.h"
+#include "nlohmann_json.hpp"
 
 using ClientConnectHandle = std::function<void(bool)>;
 using ClientReadHandle = std::function<void(uint32_t, const void *, size_t)>;
@@ -26,6 +27,7 @@ public:
 	void setCloseHandle(ClientCloseHandle handle);
 
 	void sendData(uint32_t msgID, const void* data, size_t sz);
+	void sendData(uint32_t msgID,const nlohmann::json& msg);
 
 	void close();
 private:

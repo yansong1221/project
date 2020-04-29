@@ -26,46 +26,30 @@ void CMYSQLPool::Initialization(const char* szDBAddr, int wPort, const char* szD
 
 	for (size_t i = 0; i < std::thread::hardware_concurrency() * 2; ++i)
 	{
-		MYSQLConnection* pDataBaseHelper = new MYSQLConnection;
-		pDataBaseHelper->open(m_szDBAddr.c_str(), m_szUser.c_str(), m_szPassword.c_str(), m_szDBName.c_str(), m_wPort);
-		m_FreeConns.push_back(pDataBaseHelper);
+		auto p = std::make_shared<MYSQLConnection>();
+		p->open(m_szDBAddr.c_str(), m_szUser.c_str(), m_szPassword.c_str(), m_szDBName.c_str(), m_wPort);
+		m_Conns.push_back(p);
 	}
 }
 
-MYSQLConnection* CMYSQLPool::CreateMYSQLConn()
+std::shared_ptr<MYSQLConnection> CMYSQLPool::CreateMYSQLConn()
 {
 	std::unique_lock<SpinLock> ul(m_SpinLock);
 
-	MYSQLConnection* pDataBaseHelper = NULL;
+	static int index = 0;
 
-	if (!m_FreeConns.empty())
+	for(int i = 0;i<m_Conns.size();++i)
 	{
-		pDataBaseHelper = m_FreeConns.front();
-		m_FreeConns.pop_front();
-		m_UseConns.push_back(pDataBaseHelper);
-
-		return pDataBaseHelper;
+		index = (index + 1) % m_Conns.size();
+		if(m_Conns[i].unique()) return m_Conns[i];
+		
 	}
 
-	pDataBaseHelper = new MYSQLConnection;
-	pDataBaseHelper->open(m_szDBAddr.c_str(), m_szUser.c_str(), m_szPassword.c_str(), m_szDBName.c_str(), m_wPort);
-	m_UseConns.push_back(pDataBaseHelper);
+	auto p = std::make_shared<MYSQLConnection>();
+	p->open(m_szDBAddr.c_str(), m_szUser.c_str(), m_szPassword.c_str(), m_szDBName.c_str(), m_wPort);
+	m_Conns.push_back(p);
 
-	return pDataBaseHelper;
-}
-
-
-void CMYSQLPool::RecoverMYSQLConn(MYSQLConnection* pDataBaseHelper)
-{
-	std::unique_lock<SpinLock> ul(m_SpinLock);
-
-	auto iter = std::find(m_UseConns.begin(), m_UseConns.end(), pDataBaseHelper);
-	if (iter == m_UseConns.end())
-	{
-		return;
-	}
-	m_FreeConns.push_back(pDataBaseHelper);
-	m_UseConns.erase(iter);
+	return p;
 }
 
 CMYSQLPool* CMYSQLPool::GetInstance()
@@ -75,18 +59,7 @@ CMYSQLPool* CMYSQLPool::GetInstance()
 
 void CMYSQLPool::UnInitialization()
 {
-	for (auto v : m_FreeConns)
-	{
-		delete v;
-	}
-	m_FreeConns.clear();
-
-
-	for (auto v : m_UseConns)
-	{
-		delete v;
-	}
-	m_UseConns.clear();
+	m_Conns.clear();
 }
 
 

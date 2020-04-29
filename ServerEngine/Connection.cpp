@@ -4,9 +4,9 @@
 
 enum ConnStatus
 {
-	CONNSTATUS_DEATH,						//死亡连接
-	CONNSTATUS_DANGER,						//需要发送心跳的连接
-	CONNSTATUS_SAFE							//安全连接
+	CONNSTATUS_DEATH,						//死亡
+	CONNSTATUS_DANGER,						//危险
+	CONNSTATUS_SAFE							//安全
 };
 
 #define MAX_PACKET_SIZE						1024
@@ -17,7 +17,7 @@ typedef struct
 	uv_buf_t buf;
 } write_req_t;
 
-Connection::Connection(uint32_t bindIndex, ITCPEvent* handle)
+Connection::Connection(uint16_t bindIndex, ITCPEvent* handle)
 	: bindIndex_(bindIndex),
 	active_(false),
 	client_(nullptr),
@@ -29,9 +29,9 @@ Connection::Connection(uint32_t bindIndex, ITCPEvent* handle)
 Connection::~Connection()
 {
 }
-uint64_t Connection::getSocketID() const
+uint32_t Connection::getSocketID() const
 {
-	return ((uint64_t)bindIndex_ << 32) | roundIndex_;
+	return ((uint32_t)bindIndex_ << 16) | roundIndex_;
 }
 bool Connection::active() const
 {
@@ -63,7 +63,7 @@ void Connection::close()
 }
 
 
-uint32_t Connection::getRoundIndex() const
+uint16_t Connection::getRoundIndex() const
 {
 	return roundIndex_;
 }
@@ -143,7 +143,7 @@ void Connection::recvData()
 	},
 
 		//callback
-		[](uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
+	[](uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
 		auto conn = (Connection *)client->data;
 		if (nread > 0)
 		{

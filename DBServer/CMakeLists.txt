@@ -8,7 +8,7 @@ include_directories("../")
 
 aux_source_directory(./ SRC)
 add_executable(DBServer ${SRC})
-target_link_libraries(DBServer ServerEngine curl-d uv mysqlclient)
+target_link_libraries(DBServer ServerEngine curl-d uv mysqlclient fmt)
 
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

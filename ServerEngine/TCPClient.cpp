@@ -93,6 +93,11 @@ void TCPClient::sendData(uint32_t msgID,const void* data, size_t sz)
 		free(wr);
 	});
 }
+void TCPClient::sendData(uint32_t msgID,const nlohmann::json& msg)
+{
+	std::string sendBuff = msg.dump();
+	sendData(msgID,sendBuff.data(),sendBuff.size());
+}
 void TCPClient::parseDsata()
 {
 	while (readBuf_.size() >= sizeof(TCPHeader))

@@ -1,1 +1,1 @@
-/usr/bin/g++-7  -g  -rdynamic CMakeFiles/DBServer.dir/DBServer.cpp.o CMakeFiles/DBServer.dir/main.cpp.o  -o ../../bin/DBServer -Wl,-rpath,/home/yan/code/project/build/ServerEngine ../ServerEngine/libServerEngine.so -lcurl-d -luv -lmysqlclient 
+/usr/bin/g++-7  -g  -rdynamic CMakeFiles/DBServer.dir/DBServer.cpp.o CMakeFiles/DBServer.dir/main.cpp.o  -o ../../bin/DBServer -Wl,-rpath,/home/yan/code/project/build/ServerEngine ../ServerEngine/libServerEngine.so -lcurl-d -luv -lmysqlclient -lfmt 

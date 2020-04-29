@@ -86,7 +86,8 @@ void MYSQLQuery::freeRes()
 {
 	if ( m_MysqlRes != NULL )
 	{
-		mysql_free_result((MYSQL_RES*)m_MysqlRes);
+		MYSQL_RES* res = (MYSQL_RES*)m_MysqlRes;
+		mysql_free_result(res);
 		m_MysqlRes = NULL;
 	}
 }
@@ -430,7 +431,7 @@ void MYSQLConnection::open(const char* host, const char* user, const char* passw
 	{
 		throw MYSQLException(0, "init mysql failed!");
 	}
-
+	
 	if (0 != mysql_options((MYSQL*)mysql_, MYSQL_SET_CHARSET_NAME, charSetName))
 	{
 		throw MYSQLException(mysql_errno((MYSQL*)mysql_), mysql_error((MYSQL*)mysql_));

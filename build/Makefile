@@ -149,6 +149,19 @@ CenterServer/fast:
 	$(MAKE) -f CenterServer/CMakeFiles/CenterServer.dir/build.make CenterServer/CMakeFiles/CenterServer.dir/build
 .PHONY : CenterServer/fast
 
+#=============================================================================
+# Target rules for targets named LoginServer
+
+# Build rule for target.
+LoginServer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 LoginServer
+.PHONY : LoginServer
+
+# fast build rule for target.
+LoginServer/fast:
+	$(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/build
+.PHONY : LoginServer/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -160,6 +173,7 @@ help:
 	@echo "... ServerEngine"
 	@echo "... DBServer"
 	@echo "... CenterServer"
+	@echo "... LoginServer"
 .PHONY : help
 
 

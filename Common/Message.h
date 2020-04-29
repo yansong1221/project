@@ -22,6 +22,8 @@ public:
 		{
 			handle(std::forward<Args>(args)...);
 		});
+
+		return true;
 	}
 private:
 	std::map<uint32_t, std::list<Func>> callBacks_;

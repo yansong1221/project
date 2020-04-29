@@ -83,12 +83,12 @@ void TCPServer::close()
 	server_ = nullptr;
 }
 
-void TCPServer::sendData(uint64_t socketID, uint32_t msgID, const void* data, size_t sz)
+void TCPServer::sendData(uint32_t socketID, uint32_t msgID, const void* data, size_t sz)
 {
 	if (server_ == nullptr) return;
 
-	uint16_t bindIndex = socketID & 0xffff0000;
-	uint16_t roundIndex = (socketID & 0x0000ffff) >> 16;
+	uint16_t bindIndex = (socketID & 0xffff0000) >> 16;
+	uint16_t roundIndex = socketID & 0x0000ffff;
 
 	if (bindIndex > conns_.size()) return;
 	if (bindIndex == 0) return;
@@ -98,14 +98,19 @@ void TCPServer::sendData(uint64_t socketID, uint32_t msgID, const void* data, si
 
 	conn->send(msgID, data, sz);
 }
+void TCPServer::sendData(uint32_t socketID, uint32_t msgID,const nlohmann::json& msg)
+{
+	std::string sendBuffer = msg.dump();
+	sendData(socketID,msgID,sendBuffer.data(),sendBuffer.size());
+}
 
 
-void TCPServer::closeSocket(uint64_t socketID)
+void TCPServer::closeSocket(uint32_t socketID)
 {
 	if (server_ == nullptr) return;
 
-	uint16_t bindIndex = socketID & 0xffff0000;
-	uint16_t roundIndex = (socketID & 0x0000ffff) >> 16;
+	uint16_t bindIndex = (socketID & 0xffff0000) >> 16;
+	uint16_t roundIndex = socketID & 0x0000ffff;
 
 	if (bindIndex > conns_.size()) return;
 	if (bindIndex == 0) return;

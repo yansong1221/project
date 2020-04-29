@@ -10,6 +10,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../CMakeLists.txt"
   "../CenterServer/CMakeLists.txt"
   "../DBServer/CMakeLists.txt"
+  "../LoginServer/CMakeLists.txt"
   "../ServerEngine/CMakeLists.txt"
   "CMakeFiles/3.10.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.10.2/CMakeCXXCompiler.cmake"
@@ -44,6 +45,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "ServerEngine/CMakeFiles/CMakeDirectoryInformation.cmake"
   "DBServer/CMakeFiles/CMakeDirectoryInformation.cmake"
   "CenterServer/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "LoginServer/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -51,4 +53,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "ServerEngine/CMakeFiles/ServerEngine.dir/DependInfo.cmake"
   "DBServer/CMakeFiles/DBServer.dir/DependInfo.cmake"
   "CenterServer/CMakeFiles/CenterServer.dir/DependInfo.cmake"
+  "LoginServer/CMakeFiles/LoginServer.dir/DependInfo.cmake"
   )

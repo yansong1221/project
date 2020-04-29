@@ -115,8 +115,6 @@ algorithm
 /home/yan/code/project/ServerEngine/MYSQLPool.h
 ServerEngine.h
 /home/yan/code/project/ServerEngine/ServerEngine.h
-list
--
 vector
 -
 memory
@@ -219,6 +217,8 @@ vector
 -
 MemoryStream.h
 /home/yan/code/project/ServerEngine/MemoryStream.h
+nlohmann_json.hpp
+/home/yan/code/project/ServerEngine/nlohmann_json.hpp
 
 /home/yan/code/project/ServerEngine/TCPServer.cpp
 TCPServer.h
@@ -233,6 +233,8 @@ ServerEngine.h
 /home/yan/code/project/ServerEngine/ServerEngine.h
 Connection.h
 /home/yan/code/project/ServerEngine/Connection.h
+nlohmann_json.hpp
+/home/yan/code/project/ServerEngine/nlohmann_json.hpp
 
 /home/yan/code/project/ServerEngine/ThreadPool.cpp
 ThreadPool.h

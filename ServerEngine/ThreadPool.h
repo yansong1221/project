@@ -11,7 +11,7 @@ public:
 	virtual ~IThreadTask() {}
 
 	virtual void run() = 0;
-	void prsentMainThread(){}
+	virtual void prsentMainThread(){}
 };
 
 class ENGINE_API ThreadPool

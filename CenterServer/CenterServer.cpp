@@ -36,12 +36,12 @@ bool CenterServer::OnShutDown()
 	return true;
 }
 
-void CenterServer::onNewConnect(uint64_t socketID)
+void CenterServer::onNewConnect(uint32_t socketID)
 {
 	ServerManager::getInstance()->createServer(socketID);
 }
 
-void CenterServer::onNewMessage(uint64_t socketID, uint32_t msgID, const void *data, size_t sz)
+void CenterServer::onNewMessage(uint32_t socketID, uint32_t msgID, const void *data, size_t sz)
 {
 	try
 	{
@@ -59,12 +59,12 @@ void CenterServer::onNewMessage(uint64_t socketID, uint32_t msgID, const void *d
 	}
 }
 
-void CenterServer::onCloseConnect(uint64_t socketID)
+void CenterServer::onCloseConnect(uint32_t socketID)
 {
 	ServerManager::getInstance()->discardServer(socketID);
 }
 
-void CenterServer::OnRegisterServer(uint64_t socketID, const nlohmann::json& msg)
+void CenterServer::OnRegisterServer(uint32_t socketID, const nlohmann::json& msg)
 {
 	auto serverItem = ServerManager::getInstance()->serachServer(socketID).lock();
 	if (serverItem == nullptr)

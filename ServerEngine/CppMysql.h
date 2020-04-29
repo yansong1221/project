@@ -86,10 +86,10 @@ public:
 	virtual ~MYSQLConnection();
 
 	void open(const char* host, const char* user, const char* passwd, const char* db,
-	          unsigned int port, const char* charSetName = "utf8mb4", unsigned long client_flag = 0);
+	          unsigned int port, const char* charSetName = "utf8mb4", unsigned long client_flag = (1UL << 16));
 
 	bool setOpenParam(const char* host, const char* user, const char* passwd, const char* db,
-	                  unsigned int port, const char* charSetName = "utf8mb4", unsigned long client_flag = 0);
+	                  unsigned int port, const char* charSetName = "utf8mb4", unsigned long client_flag = (1UL << 16));
 
 	void close();
 

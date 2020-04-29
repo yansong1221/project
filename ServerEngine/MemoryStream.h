@@ -30,7 +30,7 @@ public:
 	MemoryStream(const void* src, size_t size);
 	~MemoryStream();
 
-	//·´ĞòÁĞ»¯
+	//ååºåˆ—åŒ–
 	template <typename T>
 	MemoryStream& operator >> (T& value)
 	{
@@ -57,7 +57,7 @@ public:
 
 	std::string readAll();
 
-	//ĞòÁĞ»¯
+	//åºåˆ—åŒ–
 	template <typename T> MemoryStream& operator << (const T& value)
 	{
 		append(value);

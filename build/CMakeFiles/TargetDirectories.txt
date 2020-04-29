@@ -9,3 +9,6 @@
 /home/yan/code/project/build/CenterServer/CMakeFiles/rebuild_cache.dir
 /home/yan/code/project/build/CenterServer/CMakeFiles/CenterServer.dir
 /home/yan/code/project/build/CenterServer/CMakeFiles/edit_cache.dir
+/home/yan/code/project/build/LoginServer/CMakeFiles/rebuild_cache.dir
+/home/yan/code/project/build/LoginServer/CMakeFiles/LoginServer.dir
+/home/yan/code/project/build/LoginServer/CMakeFiles/edit_cache.dir

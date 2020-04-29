@@ -40,6 +40,7 @@ int EventDispatcher::run()
 {
 	if (eventHandle_->OnStartUp() == false)
 	{
+		eventHandle_->OnShutDown();
 		return -1;
 	}
 
