@@ -15,14 +15,14 @@ std::shared_ptr<UserServerItem> UserManager::searchUserByUserID(int userID)
 
     return iter->second;
 }
-std::shared_ptr<UserServerItem> UserManager::searchUserBySocketID(uint64_t socketID)
+std::shared_ptr<UserServerItem> UserManager::searchUserBySocketID(uint32_t socketID)
 {
     auto iter = socketIDUsers_.find(socketID);
     if(iter == socketIDUsers_.end()) return nullptr;
 
     return iter->second;
 }
-std::shared_ptr<UserServerItem> UserManager::createUser(uint64_t socketID,const UserInfo& info)
+std::shared_ptr<UserServerItem> UserManager::createUser(uint32_t socketID,const UserInfo& info)
 {
     auto p = std::make_shared<UserServerItem>();
     p->socketID(socketID);
@@ -41,13 +41,13 @@ void UserManager::removeUserByUserID(int userID)
     auto iter = idUsers_.find(userID);
     if(iter != idUsers_.end())
     {
-        uint64_t socketID = iter->second->socketID();
+        uint32_t socketID = iter->second->socketID();
 
         idUsers_.erase(iter);
         removeUserBySocketID(socketID);
     }
 }
-void UserManager::removeUserBySocketID(uint64_t socketID)
+void UserManager::removeUserBySocketID(uint32_t socketID)
 {
      auto iter = socketIDUsers_.find(socketID);
     if(iter != socketIDUsers_.end())

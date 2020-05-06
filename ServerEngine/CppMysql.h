@@ -157,6 +157,8 @@ public:
 
 	MYSQLQuery& nextRecordset();
 
+	void freeRes();
+
 private:
 	MYSQLConnection(const MYSQLConnection& db);
 	MYSQLConnection& operator=(const MYSQLConnection& db);

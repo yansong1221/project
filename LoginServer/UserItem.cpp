@@ -19,11 +19,11 @@ UserInfo& UserServerItem::userInfo()
     return userInfo_;
 }
 
-void UserServerItem::socketID(uint64_t id)
+void UserServerItem::socketID(uint32_t id)
 {
     socketID_ = id;
 }
-uint64_t UserServerItem::socketID() const
+uint32_t UserServerItem::socketID() const
 {
     return socketID_;
 }

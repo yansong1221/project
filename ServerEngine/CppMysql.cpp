@@ -489,7 +489,7 @@ MYSQLQuery& MYSQLConnection::querySQL(const char* sql)
 			reconnect();
 			continue;		
 		}
-
+		freeRes();
 		m_strLastSQL = sql;
 
 		if (mysql_real_query((MYSQL*)mysql_, sql, (unsigned long)strlen(sql)) != 0)
@@ -510,6 +510,15 @@ MYSQLQuery& MYSQLConnection::querySQL(const char* sql)
 	} while (true);		
 }
 
+void MYSQLConnection::freeRes()
+{
+	do
+	{
+		MYSQL_RES* result = mysql_store_result( (MYSQL*)mysql_ );
+		mysql_free_result(result);
+	}while( !mysql_next_result( (MYSQL*)mysql_ ) );
+}
+
 /* 执行非返回结果查询 */
 int MYSQLConnection::execSQL(const char* sql)
 {
@@ -521,7 +530,7 @@ int MYSQLConnection::execSQL(const char* sql)
 			reconnect();
 			continue;
 		}
-
+		freeRes();
 		m_strLastSQL = sql;
 		int nRet = mysql_real_query((MYSQL*)mysql_, sql, (unsigned long)strlen(sql));
 		if (nRet == 0)

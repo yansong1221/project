@@ -6,7 +6,6 @@ enum ServerType
 {
 	SERVER_TYPE_NONE,
 	SERVER_TYPE_LOGIN,
-	SERVER_TYPE_GATE,
 };
 
 class ServerItem : public std::enable_shared_from_this<ServerItem>

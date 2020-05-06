@@ -15,18 +15,18 @@ public:
     
     //查找用户
     std::shared_ptr<UserServerItem> searchUserByUserID(int userID);
-    std::shared_ptr<UserServerItem> searchUserBySocketID(uint64_t socketID);
+    std::shared_ptr<UserServerItem> searchUserBySocketID(uint32_t socketID);
 
     //创建用户
-     std::shared_ptr<UserServerItem> createUser(uint64_t socketID,const UserInfo& info);
+     std::shared_ptr<UserServerItem> createUser(uint32_t socketID,const UserInfo& info);
 
      //删除用户
      void removeUserByUserID(int userID);
-     void removeUserBySocketID(uint64_t socketID);
+     void removeUserBySocketID(uint32_t socketID);
 
 private:
     std::map<int,std::shared_ptr<UserServerItem>> idUsers_;
-    std::map<uint64_t,std::shared_ptr<UserServerItem>> socketIDUsers_;
+    std::map<uint32_t,std::shared_ptr<UserServerItem>> socketIDUsers_;
 };
 
 

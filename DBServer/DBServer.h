@@ -26,6 +26,14 @@ protected:
 
 	//用户登录
 	void onUserLogin(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
+	//加载好友列表
+	void onLoadFriendList(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
+	//加载群列表
+	void onLoadGroupList(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
+	//保存好友消息
+	void onSaveFirendMessage(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
+	//保存群消息
+	void onSaveGroupMessage(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
 protected:
 	
 public:
