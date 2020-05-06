@@ -96,8 +96,18 @@
 },
 {
   "directory": "/home/yan/code/project/build/LoginServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/LoginServer/..  -g   -std=gnu++1z -o CMakeFiles/LoginServer.dir/GroupManager.cpp.o -c /home/yan/code/project/LoginServer/GroupManager.cpp",
+  "file": "/home/yan/code/project/LoginServer/GroupManager.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/LoginServer",
   "command": "/usr/bin/g++-7   -I/home/yan/code/project/LoginServer/..  -g   -std=gnu++1z -o CMakeFiles/LoginServer.dir/LoginServer.cpp.o -c /home/yan/code/project/LoginServer/LoginServer.cpp",
   "file": "/home/yan/code/project/LoginServer/LoginServer.cpp"
+},
+{
+  "directory": "/home/yan/code/project/build/LoginServer",
+  "command": "/usr/bin/g++-7   -I/home/yan/code/project/LoginServer/..  -g   -std=gnu++1z -o CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o -c /home/yan/code/project/LoginServer/UserFriendManager.cpp",
+  "file": "/home/yan/code/project/LoginServer/UserFriendManager.cpp"
 },
 {
   "directory": "/home/yan/code/project/build/LoginServer",

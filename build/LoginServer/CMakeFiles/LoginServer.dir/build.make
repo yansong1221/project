@@ -57,9 +57,33 @@ include LoginServer/CMakeFiles/LoginServer.dir/progress.make
 # Include the compile flags for this target's objects.
 include LoginServer/CMakeFiles/LoginServer.dir/flags.make
 
+LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o: LoginServer/CMakeFiles/LoginServer.dir/flags.make
+LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o: ../LoginServer/GroupManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o"
+	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LoginServer.dir/GroupManager.cpp.o -c /home/yan/code/project/LoginServer/GroupManager.cpp
+
+LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LoginServer.dir/GroupManager.cpp.i"
+	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yan/code/project/LoginServer/GroupManager.cpp > CMakeFiles/LoginServer.dir/GroupManager.cpp.i
+
+LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LoginServer.dir/GroupManager.cpp.s"
+	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yan/code/project/LoginServer/GroupManager.cpp -o CMakeFiles/LoginServer.dir/GroupManager.cpp.s
+
+LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.requires:
+
+.PHONY : LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.requires
+
+LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.provides: LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.requires
+	$(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.provides.build
+.PHONY : LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.provides
+
+LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.provides.build: LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o
+
+
 LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o: LoginServer/CMakeFiles/LoginServer.dir/flags.make
 LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o: ../LoginServer/LoginServer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o"
 	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LoginServer.dir/LoginServer.cpp.o -c /home/yan/code/project/LoginServer/LoginServer.cpp
 
 LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.i: cmake_force
@@ -81,9 +105,33 @@ LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o.provides: LoginServer/C
 LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o.provides.build: LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o
 
 
+LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o: LoginServer/CMakeFiles/LoginServer.dir/flags.make
+LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o: ../LoginServer/UserFriendManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o"
+	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o -c /home/yan/code/project/LoginServer/UserFriendManager.cpp
+
+LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LoginServer.dir/UserFriendManager.cpp.i"
+	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yan/code/project/LoginServer/UserFriendManager.cpp > CMakeFiles/LoginServer.dir/UserFriendManager.cpp.i
+
+LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LoginServer.dir/UserFriendManager.cpp.s"
+	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yan/code/project/LoginServer/UserFriendManager.cpp -o CMakeFiles/LoginServer.dir/UserFriendManager.cpp.s
+
+LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.requires:
+
+.PHONY : LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.requires
+
+LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.provides: LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.requires
+	$(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.provides.build
+.PHONY : LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.provides
+
+LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.provides.build: LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o
+
+
 LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o: LoginServer/CMakeFiles/LoginServer.dir/flags.make
 LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o: ../LoginServer/UserItem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o"
 	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LoginServer.dir/UserItem.cpp.o -c /home/yan/code/project/LoginServer/UserItem.cpp
 
 LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.i: cmake_force
@@ -107,7 +155,7 @@ LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o.provides.build: LoginServe
 
 LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o: LoginServer/CMakeFiles/LoginServer.dir/flags.make
 LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o: ../LoginServer/UserManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o"
 	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LoginServer.dir/UserManager.cpp.o -c /home/yan/code/project/LoginServer/UserManager.cpp
 
 LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.i: cmake_force
@@ -131,7 +179,7 @@ LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o.provides.build: LoginSe
 
 LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o: LoginServer/CMakeFiles/LoginServer.dir/flags.make
 LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o: ../LoginServer/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o"
 	cd /home/yan/code/project/build/LoginServer && /usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LoginServer.dir/main.cpp.o -c /home/yan/code/project/LoginServer/main.cpp
 
 LoginServer/CMakeFiles/LoginServer.dir/main.cpp.i: cmake_force
@@ -155,7 +203,9 @@ LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o.provides.build: LoginServer/CM
 
 # Object files for target LoginServer
 LoginServer_OBJECTS = \
+"CMakeFiles/LoginServer.dir/GroupManager.cpp.o" \
 "CMakeFiles/LoginServer.dir/LoginServer.cpp.o" \
+"CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o" \
 "CMakeFiles/LoginServer.dir/UserItem.cpp.o" \
 "CMakeFiles/LoginServer.dir/UserManager.cpp.o" \
 "CMakeFiles/LoginServer.dir/main.cpp.o"
@@ -163,14 +213,16 @@ LoginServer_OBJECTS = \
 # External object files for target LoginServer
 LoginServer_EXTERNAL_OBJECTS =
 
+../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o
 ../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o
+../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o
 ../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o
 ../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o
 ../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o
 ../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/build.make
 ../bin/LoginServer: ServerEngine/libServerEngine.so
 ../bin/LoginServer: LoginServer/CMakeFiles/LoginServer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../../bin/LoginServer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../../bin/LoginServer"
 	cd /home/yan/code/project/build/LoginServer && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LoginServer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -178,7 +230,9 @@ LoginServer/CMakeFiles/LoginServer.dir/build: ../bin/LoginServer
 
 .PHONY : LoginServer/CMakeFiles/LoginServer.dir/build
 
+LoginServer/CMakeFiles/LoginServer.dir/requires: LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o.requires
 LoginServer/CMakeFiles/LoginServer.dir/requires: LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o.requires
+LoginServer/CMakeFiles/LoginServer.dir/requires: LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o.requires
 LoginServer/CMakeFiles/LoginServer.dir/requires: LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o.requires
 LoginServer/CMakeFiles/LoginServer.dir/requires: LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o.requires
 LoginServer/CMakeFiles/LoginServer.dir/requires: LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o.requires

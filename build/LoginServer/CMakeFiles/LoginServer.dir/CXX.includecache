@@ -504,6 +504,22 @@ type_traits
 
 /home/yan/code/project/LoginServer/CMD.h
 
+/home/yan/code/project/LoginServer/GroupManager.cpp
+GroupManager.h
+/home/yan/code/project/LoginServer/GroupManager.h
+
+/home/yan/code/project/LoginServer/GroupManager.h
+cstdint
+-
+memory
+-
+string
+-
+map
+-
+vector
+-
+
 /home/yan/code/project/LoginServer/LoginServer.cpp
 LoginServer.h
 /home/yan/code/project/LoginServer/LoginServer.h
@@ -523,6 +539,24 @@ Common/Message.h
 /home/yan/code/project/LoginServer/Common/Message.h
 UserManager.h
 /home/yan/code/project/LoginServer/UserManager.h
+UserFriendManager.h
+/home/yan/code/project/LoginServer/UserFriendManager.h
+GroupManager.h
+/home/yan/code/project/LoginServer/GroupManager.h
+
+/home/yan/code/project/LoginServer/UserFriendManager.cpp
+UserFriendManager.h
+/home/yan/code/project/LoginServer/UserFriendManager.h
+
+/home/yan/code/project/LoginServer/UserFriendManager.h
+string
+-
+map
+-
+memory
+-
+vector
+-
 
 /home/yan/code/project/LoginServer/UserItem.cpp
 UserItem.h
@@ -532,6 +566,8 @@ UserItem.h
 string
 -
 cstdint
+-
+memory
 -
 
 /home/yan/code/project/LoginServer/UserManager.cpp

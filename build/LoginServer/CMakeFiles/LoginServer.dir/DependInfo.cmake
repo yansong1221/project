@@ -4,7 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/yan/code/project/LoginServer/GroupManager.cpp" "/home/yan/code/project/build/LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o"
   "/home/yan/code/project/LoginServer/LoginServer.cpp" "/home/yan/code/project/build/LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.o"
+  "/home/yan/code/project/LoginServer/UserFriendManager.cpp" "/home/yan/code/project/build/LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o"
   "/home/yan/code/project/LoginServer/UserItem.cpp" "/home/yan/code/project/build/LoginServer/CMakeFiles/LoginServer.dir/UserItem.cpp.o"
   "/home/yan/code/project/LoginServer/UserManager.cpp" "/home/yan/code/project/build/LoginServer/CMakeFiles/LoginServer.dir/UserManager.cpp.o"
   "/home/yan/code/project/LoginServer/main.cpp" "/home/yan/code/project/build/LoginServer/CMakeFiles/LoginServer.dir/main.cpp.o"

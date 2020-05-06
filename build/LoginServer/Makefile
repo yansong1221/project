@@ -125,6 +125,33 @@ LoginServer/fast:
 	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/build
 .PHONY : LoginServer/fast
 
+GroupManager.o: GroupManager.cpp.o
+
+.PHONY : GroupManager.o
+
+# target to build an object file
+GroupManager.cpp.o:
+	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.o
+.PHONY : GroupManager.cpp.o
+
+GroupManager.i: GroupManager.cpp.i
+
+.PHONY : GroupManager.i
+
+# target to preprocess a source file
+GroupManager.cpp.i:
+	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.i
+.PHONY : GroupManager.cpp.i
+
+GroupManager.s: GroupManager.cpp.s
+
+.PHONY : GroupManager.s
+
+# target to generate assembly for a file
+GroupManager.cpp.s:
+	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/GroupManager.cpp.s
+.PHONY : GroupManager.cpp.s
+
 LoginServer.o: LoginServer.cpp.o
 
 .PHONY : LoginServer.o
@@ -151,6 +178,33 @@ LoginServer.s: LoginServer.cpp.s
 LoginServer.cpp.s:
 	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/LoginServer.cpp.s
 .PHONY : LoginServer.cpp.s
+
+UserFriendManager.o: UserFriendManager.cpp.o
+
+.PHONY : UserFriendManager.o
+
+# target to build an object file
+UserFriendManager.cpp.o:
+	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o
+.PHONY : UserFriendManager.cpp.o
+
+UserFriendManager.i: UserFriendManager.cpp.i
+
+.PHONY : UserFriendManager.i
+
+# target to preprocess a source file
+UserFriendManager.cpp.i:
+	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.i
+.PHONY : UserFriendManager.cpp.i
+
+UserFriendManager.s: UserFriendManager.cpp.s
+
+.PHONY : UserFriendManager.s
+
+# target to generate assembly for a file
+UserFriendManager.cpp.s:
+	cd /home/yan/code/project/build && $(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/UserFriendManager.cpp.s
+.PHONY : UserFriendManager.cpp.s
 
 UserItem.o: UserItem.cpp.o
 
@@ -242,9 +296,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... LoginServer"
 	@echo "... edit_cache"
+	@echo "... GroupManager.o"
+	@echo "... GroupManager.i"
+	@echo "... GroupManager.s"
 	@echo "... LoginServer.o"
 	@echo "... LoginServer.i"
 	@echo "... LoginServer.s"
+	@echo "... UserFriendManager.o"
+	@echo "... UserFriendManager.i"
+	@echo "... UserFriendManager.s"
 	@echo "... UserItem.o"
 	@echo "... UserItem.i"
 	@echo "... UserItem.s"

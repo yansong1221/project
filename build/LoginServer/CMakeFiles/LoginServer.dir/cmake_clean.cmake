@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/LoginServer.dir/GroupManager.cpp.o"
   "CMakeFiles/LoginServer.dir/LoginServer.cpp.o"
+  "CMakeFiles/LoginServer.dir/UserFriendManager.cpp.o"
   "CMakeFiles/LoginServer.dir/UserItem.cpp.o"
   "CMakeFiles/LoginServer.dir/UserManager.cpp.o"
   "CMakeFiles/LoginServer.dir/main.cpp.o"

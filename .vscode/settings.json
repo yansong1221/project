@@ -60,5 +60,6 @@
         "format": "cpp",
         "iomanip": "cpp",
         "variant": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }

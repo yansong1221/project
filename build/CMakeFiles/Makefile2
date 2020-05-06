@@ -84,7 +84,7 @@ ServerEngine/preinstall:
 ServerEngine/CMakeFiles/ServerEngine.dir/all:
 	$(MAKE) -f ServerEngine/CMakeFiles/ServerEngine.dir/build.make ServerEngine/CMakeFiles/ServerEngine.dir/depend
 	$(MAKE) -f ServerEngine/CMakeFiles/ServerEngine.dir/build.make ServerEngine/CMakeFiles/ServerEngine.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=14,15,16,17,18,19,20,21,22,23,24,25,26,27 "Built target ServerEngine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=16,17,18,19,20,21,22,23,24,25,26,27,28,29 "Built target ServerEngine"
 .PHONY : ServerEngine/CMakeFiles/ServerEngine.dir/all
 
 # Include target in all.
@@ -249,7 +249,7 @@ LoginServer/preinstall:
 LoginServer/CMakeFiles/LoginServer.dir/all: ServerEngine/CMakeFiles/ServerEngine.dir/all
 	$(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/depend
 	$(MAKE) -f LoginServer/CMakeFiles/LoginServer.dir/build.make LoginServer/CMakeFiles/LoginServer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=9,10,11,12,13 "Built target LoginServer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yan/code/project/build/CMakeFiles --progress-num=9,10,11,12,13,14,15 "Built target LoginServer"
 .PHONY : LoginServer/CMakeFiles/LoginServer.dir/all
 
 # Include target in all.
@@ -259,7 +259,7 @@ all: LoginServer/CMakeFiles/LoginServer.dir/all
 
 # Build rule for subdir invocation for target.
 LoginServer/CMakeFiles/LoginServer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yan/code/project/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yan/code/project/build/CMakeFiles 21
 	$(MAKE) -f CMakeFiles/Makefile2 LoginServer/CMakeFiles/LoginServer.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/yan/code/project/build/CMakeFiles 0
 .PHONY : LoginServer/CMakeFiles/LoginServer.dir/rule
