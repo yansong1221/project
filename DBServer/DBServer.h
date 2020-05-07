@@ -34,6 +34,10 @@ protected:
 	void onSaveFirendMessage(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
 	//保存群消息
 	void onSaveGroupMessage(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
+	//加载好友历史消息
+	void onLoadFriendMessage(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
+	//加载会话列表
+	void onLoadRecentSession(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg);
 protected:
 	
 public:

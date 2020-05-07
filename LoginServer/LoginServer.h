@@ -38,6 +38,10 @@ protected:
 	void onDBLoadFriendListResult(uint32_t contextID,const nlohmann::json& msg);
 	//加载群列表
 	void onDBLoadGroupList(uint32_t contextID,const nlohmann::json& msg);
+	//加载好友历史记录结果
+	void onDBLoadFriendMessageResult(uint32_t contextID,const nlohmann::json& msg);
+
+	void onDBLoadRecentSessionResult(uint32_t contextID,const nlohmann::json& msg);
 //网络消息
 private:
 	//用户登录
@@ -46,6 +50,10 @@ private:
 	void onUserFriendMessage(uint32_t socketID,const nlohmann::json& msg);
 	//用户群消息
 	void onUserGroupMessage(uint32_t socketID,const nlohmann::json& msg);
+	//加载好友聊天消息
+	void onUserLoadFriendMessage(uint32_t socketID,const nlohmann::json& msg);
+	//加载最近会话
+	void onUserLoadRecentSession(uint32_t socketID,const nlohmann::json& msg);
 public:
 	int run();
 private:

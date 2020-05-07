@@ -69,6 +69,11 @@ bool DBServer::OnStartUp()
 	messageMgr_.Register(CMD_DB_C_LOAD_GROUP_LIST, CALL_BACK_3(&DBServer::onLoadGroupList));
 	//保存群消息
 	messageMgr_.Register(CMD_DB_C_SAVE_GROUP_MESSAGE, CALL_BACK_3(&DBServer::onSaveGroupMessage));
+	//加载聊天记录
+	messageMgr_.Register(CMD_DB_C_LOAD_FRIEND_MESSAGE, CALL_BACK_3(&DBServer::onSaveGroupMessage));
+	messageMgr_.Register(CMD_DB_C_LOAD_RECENT_SESSION, CALL_BACK_3(&DBServer::onLoadRecentSession));
+	
+	
 	return true;
 }
 bool DBServer::OnShutDown()
@@ -358,12 +363,11 @@ void DBServer::onSaveFirendMessage(uint32_t socketID, uint32_t contextID, const 
 				int userID = data_["userID"];
 				int toUserID = data_["toUserID"];
 				std::string content = data_["content"];
-				int isRead = data_["isRead"];
 				time_t currentTime = data_["currentTime"];
 				long long messageIndex = data_["messageIndex"];
 
 				auto conn = CMYSQLPool::GetInstance()->CreateMYSQLConn();
-				conn->execSQL(fmt::format("call SaveFriendMessage({},{},{},'{}',{},{})", userID, toUserID, content, isRead, currentTime,messageIndex).c_str());
+				conn->execSQL(fmt::format("call SaveFriendMessage({},{},'{}',{},{})", userID, toUserID, content, currentTime,messageIndex).c_str());
 			}
 			catch (const std::exception &e)
 			{
@@ -401,6 +405,108 @@ void DBServer::onSaveGroupMessage(uint32_t socketID, uint32_t contextID, const n
 			{
 				Logger::getInstance().error("数据库 保存群聊天消息错误 %s", e.what());
 			}
+		}
+	};
+
+	threadPool_.addTask(new DBOperator(socketID, contextID, msg, this));
+}
+
+//加载好友历史消息
+void DBServer::onLoadFriendMessage(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg)
+{
+	struct DBOperator : public BaseDBOperator
+	{
+		DBOperator(uint32_t socketID, uint32_t contextID, const nlohmann::json &msg, DBServer *server)
+			: BaseDBOperator(socketID, contextID, msg, server) {}
+
+		/* data */
+		void run()
+		{
+			try
+			{
+				int userID = data_["userID"];
+				int toUserID = data_["toUserID"];
+				int pageNo =  data_["pageNo"];
+				int limit = data_["limit"];
+
+				auto conn = CMYSQLPool::GetInstance()->CreateMYSQLConn();
+				auto query = conn->querySQL(fmt::format("call LoadFrindMessage({},{},{},{})", userID, toUserID, pageNo, limit).c_str());
+
+				data_ = nlohmann::json::array();
+				while (!query.eof())
+				{
+					nlohmann::json item;
+					item["userID"] = query.getIntField("userid");
+					item["toUserID"] = query.getIntField("to_userid");
+					item["content"] = query.getStringField("content");
+					item["messageIndex"] = query.getInt64Field("message_id");
+					item["curTime"]  = query.getIntField("create_date");
+
+					data_.push_back(item);
+					query.nextRow();
+				}
+				
+			}
+			catch (const std::exception &e)
+			{
+				Logger::getInstance().error("数据库 加载好友历史消息错误 %s", e.what());
+			}
+		}
+
+		void prsentMainThread()
+		{
+			sendData(CMD_DB_S_LOAD_FRIEND_MESSAGE_RESULT,data_);
+		}
+	};
+
+	threadPool_.addTask(new DBOperator(socketID, contextID, msg, this));
+}
+//加载会话列表
+void DBServer::onLoadRecentSession(uint32_t socketID,uint32_t contextID,const nlohmann::json& msg)
+{
+	struct DBOperator : public BaseDBOperator
+	{
+		DBOperator(uint32_t socketID, uint32_t contextID, const nlohmann::json &msg, DBServer *server)
+			: BaseDBOperator(socketID, contextID, msg, server) {}
+
+		/* data */
+		void run()
+		{
+			try
+			{
+				int userID = data_["userID"];
+				int pageNo =  data_["pageNo"];
+				int limit = data_["limit"];
+
+				auto conn = CMYSQLPool::GetInstance()->CreateMYSQLConn();
+				auto query = conn->querySQL(fmt::format("call LoadRecentSession({},{},{})", userID, pageNo, limit).c_str());
+
+				data_ = nlohmann::json::array();
+				while (!query.eof())
+				{
+					nlohmann::json item;
+					item["contextID"] = query.getIntField("context_id");
+					item["lastUserID"] = query.getIntField("last_userid");
+					item["type"] = query.getStringField("type");
+					item["unreadCount"] = query.getInt64Field("unread_count");
+					item["lastMessageIndex"]  = query.getIntField("last_message_id");
+					item["lastMessageContent"]  = query.getIntField("last_message_content");
+					item["lastTime"] = query.getIntField("last_time");
+
+					data_.push_back(item);
+					query.nextRow();
+				}
+				
+			}
+			catch (const std::exception &e)
+			{
+				Logger::getInstance().error("数据库 加载好友历史消息错误 %s", e.what());
+			}
+		}
+
+		void prsentMainThread()
+		{
+			sendData(CMD_DB_S_LOAD_RECENT_SESSION_RESULT,data_);
 		}
 	};
 
